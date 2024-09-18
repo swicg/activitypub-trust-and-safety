@@ -1,6 +1,7 @@
 # activitypub-trust-and-safety
 
-Repository for a Social Web Community Group report on improving the trust, safety, and integrity of ActivityPub and related specifications.
+Repository for a report on improving the trust, safety, and integrity of ActivityPub and related specifications by the W3C 
+[Social Web Community Group](https://www.w3.org/community/swicg/).
 
 Latest editor's draft: https://swicg.github.io/activitypub-trust-and-safety/ (pending)
 

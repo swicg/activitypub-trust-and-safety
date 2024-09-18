@@ -10,6 +10,8 @@ It is used:
 * As an issue tracker for Trust and Safety related ideas, requests, and issues.
 * As a repository of Reports, Notes, and other task force deliverables.
 
+**Note:** we cannot directly change or improve various software that implements ActivityPub within the scope of this Taskforce, for that, please file issues with the respective project's issue trackers, potentially cross referencing issues here.
+
 ## Scope of work
 
 The scope of this task force is still to be defined, however, we should likely emphasize first improving existing issues before creating new features. e.g., prefer issues like "recommend the usage of the replies collection" over something like "implement federation of domain blocks", where the latter is something that isn't well defined at all yet, where as the former is.

@@ -46,33 +46,37 @@ Original agenda: https://github.com/swicg/activitypub-trust-and-safety/issues/26
 
 ## Minutes
 
-Reminder of process, W3C account requirements and contributor agreements (links in agenda)
+**Please:** Make sure you have a W3C Account, and have joined the [Social Web CG](https://www.w3.org/community/socialcg/join)
 
 Code of conduct: this is not a group to work directly on moderation issues, nor is it about moderation policies of admins or platforms, but to work on the systems & protocols that can support moderation.
+
+**Please:** make sure you read the Taskforce's [Code of Conduct](https://github.com/swicg/activitypub-trust-and-safety/blob/main/CODE_OF_CONDUCT.md) and the linked W3C documents.
 
 Introductions from the above people.
 
 ### Meeting times and cadence
 
-RESOLVED: 5pm CET Tuesdays (the time of this meeting) is OK for recurring meetings.  
+**RESOLVED:** 5pm CET Tuesdays (the time of this meeting) is OK for recurring meetings.
 
 Evan reminded participants to use GitHub to help folks who have to participate asynchronously may do so. 
 Staging process will be to be followed: https://github.com/swicg/potential-charters/blob/main/stage-process.md
 
-Proposal: Meeting cadence every two weeks (same time)
+**Proposal:** Meeting cadence every two weeks (same time)
 
-RESOLVED: Meeting cadence every two weeks (same time)
+**RESOLVED:** Meeting cadence every two weeks (same time)
+
+@dmitrizagidulin will setup the recurring meeting on the Social Web CG calendar.
 
 ### Discussion of Scope
 
 Evan asked about bundling things in the scope together?  Emelia explained that Trust and Safety can have requirements on a number of documents, many of which might not be "owned" by the Trust and Safety TF.  E.g. Reply-control is being defined elsewhere but we can make recommendations to implementors about it. Similarly we aren't defining the S2S HTTP message signatures, but we can make a recommendation to use that.  
 
 The scope proposed (in the agenda and at the link in the agenda) is roughly in priority order or order of work. The Flag mechanisms are somewhat under-specified.  We can improve those mechanisms.  Some examples:
- * Mastodon only accepts 500 characters in a report text, but misskey can send ~4000.  
- * Mastodon expects Actor in Flag reports although the spec isn't clear about requiring that, so flags without actor get dropped.  
+ * Mastodon only accepted 500 characters in a report text, but misskey can send ~4000, this lead to interoperability issues (and has since been fixed).  
+ * Mastodon expects Actor in the list of `objects` in a Flag Activity, although the spec doesn't requiring that, so Flags without the actor in the `objects` list get dropped.
 
 Dan: something that might be useful, in the TAG we've been developing the [privacy principles documentd](
-https://www.w3.org/TR/privacy-principles/) which primarily focuses on browser based APIs but it may be useful as a reference point because we've spent a lot of time defining terms and exploring this problem space. a lot of references. anything in there that could be useful, i would encourage you to reference it. E.g. [2.9 Protecting web users from abusive behavior](https://www.w3.org/TR/privacy-principles/#protecting-web-users-from-abusive-behaviour).
+https://www.w3.org/TR/privacy-principles/) which primarily focuses on browser based APIs but it may be useful as a reference point because we've spent a lot of time defining terms and exploring this problem space. a lot of references. anything in there that could be useful, I would encourage you to reference it. E.g. [2.9 Protecting web users from abusive behavior](https://www.w3.org/TR/privacy-principles/#protecting-web-users-from-abusive-behaviour).
 
 Emelia: we need some idea of where to send reports as well. right now we send them to an inbox and hope for the best, this inbox might even be the inbox of the person being reported! which is bad because it can cause social issues like retaliation.
 
@@ -85,11 +89,15 @@ Block activity handling isn't very well specified.  Does the blocked user's serv
 Evan in chat: Block is defined as a SHOULD NOT for delivery. https://www.w3.org/TR/activitypub/#block-activity-outbox
 Yet some implementations do deliver Blocks. 
 
-Communication about flag activity: should there be any way to reply to somebody who makes a report to reply - for acknowledgement, for requesting clarification, or for communicating outcomes?  There's not good communication between moderation teams, which results in friction.  Domains have been fediblocked due to poor communication already.   (Chat provided these relevant links: https://w3id.org/fep/7458, https://socialhub.activitypub.rocks/t/fep-5624-per-object-reply-control-policies/2723 )
+Communication about flag activity: should there be any way to reply to somebody who makes a report to reply - for acknowledgement, for requesting clarification, or for communicating outcomes?  There's not good communication between moderation teams, which results in friction.  Domains have been fediblocked due to poor communication about moderation activities already.
 
 Darius: [research-based recommendations from me on communication around blocks/flags](https://fediverse-governance.github.io/#8.-inter-server-admin-comms)
 
-Quote posts and reply controls are very much wanted by folks in the Fediverse.  There is an implementation of reply controls and a few people are trying to get a FEP started.  There are 4 different ways of doing quote posts (misskey way, fedibird way, object links, and mastodon approach)  Each of these approaches have safety and privacy concerns about them. This Task Force wouldn't necessarily be defining these mechanisms but can help the groups defining these think through the T&S considerations. 
+Emelia: Now for the items I think should be outside of the scope of work for the taskforce initially:
+
+Emelia: Quote posts and reply controls are very much wanted by folks in the Fediverse.  There is an implementation of reply controls and a few people are trying to get a FEP started.  There are 4 different ways of doing quote posts (misskey way, fedibird way, object links, and mastodon approach)  Each of these approaches have safety and privacy concerns about them. This Task Force wouldn't necessarily be defining these mechanisms but can help the groups defining these think through the T&S considerations. 
+
+(Chat provided some additional links: https://w3id.org/fep/7458, https://socialhub.activitypub.rocks/t/fep-5624-per-object-reply-control-policies/2723 )
 
 Federation management.  Since ActivityPub doesn't specify anything about instances, or say anything about Actors sharing the same instance, can we do anything about blocking instances. While the instance information is hidden, Evan thinks we could still consider something that extends AP.
 
@@ -103,11 +111,15 @@ Emelia: I think one of the very first things the group produces can be a report 
 
 Dan Appelquist says: suggest talking about the.g. "Tackling issues that improve trust and safety for Fediverse users by improving and clarifying the interfaces between instances." is the goal here to improve things for users? for moderators? for admins? i would suggest spending a bit of time to highlight this in the report because it can help sharpen thinking around the deliverables. i'd be happy to review if you want my input
 
+Emelia: Are there additional areas we should look at?
+
 Evan: maybe look into automatic detection for spam or keywords? ML models, etc. that can help surface problematic content. Something potentially useful to investigate.  Trust & safety can also consider the effectiveness of systems that don't entirely rely on human judgement and when it's a good idea to have a human in the loop.  
 
-Emelia: [IFTAS CCS](https://about.iftas.org/activities/moderation-as-a-service/content-classification-service/) does PhotoDNA and automatic filing of reports with [NCMEC](https://www.missingkids.org/home)
+Emelia: As an example of more automated detection, [IFTAS CCS](https://about.iftas.org/activities/moderation-as-a-service/content-classification-service/) does PhotoDNA and automatic filing of reports with [NCMEC](https://www.missingkids.org/home), and can be extended to include NCII and TVEC classification.
 
-Emelia: Some naive Bayes filtering "spam or ham" but should also have humans involved to make final decisions. For majority of fediverse, the human touch makes a difference in how we moderate our communities. Be very careful with overly algorithmic applications because that creates its own trust and safety issues. For example a model going awry can cut off people from their entire network of communication.
+Emelia: Some naive Bayes filtering "spam or ham", there is a project working on providing this as a "service": https://github.com/MarcT0K/Fediverse-Spam-Filtering/
+
+Emelia: We should also have humans involved to make final decisions. For majority of fediverse, the human touch makes a difference in how we moderate our communities. Be very careful with overly algorithmic applications because that creates its own trust and safety issues. For example a model going awry can cut off people from their entire network of communication.
 
 Wes: I think there is possibly a complementary interaction between proactive (automatic) and reactive (flagging, human-based) moderaton that could be well specified. 
 

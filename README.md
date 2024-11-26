@@ -14,9 +14,19 @@ It is used:
 
 ## Scope of work
 
-The scope of this task force is still to be defined, however, we should likely emphasize first improving existing issues before creating new features. e.g., prefer issues like "recommend the usage of the replies collection" over something like "implement federation of domain blocks", where the latter is something that isn't well defined at all yet, where as the former is.
+The initial scope of work for this task force is split into three workstreams, as follows:
 
-The full scope of work will be defined by the task force members during the early meetings.
+- Initial Report (#32)
+  - Overview of current state of trust and safety on the Fediverse
+  - Documenting how ActivityPub functionality is currently used
+  - Best Practices & Recommendations
+- Improving Moderation Activities (Flag and Blocks) (#38)
+  - Addressing for where to send these activities
+  - Additional properties to improve federation of moderation activities (e.g., category and evidence on Flag Activities)
+  - Inter-server communication on moderation activities
+- Content labeling, warnings, and annotations
+
+This taskforce is intended to be ongoing, as the work of trust and safety is an ongoing matter. Additional work items may come in from the SocialCG or the taskforce, and be added to future workstreams.
 
 ## Other Discussion Forums
 

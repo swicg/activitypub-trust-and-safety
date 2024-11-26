@@ -24,7 +24,7 @@ The initial scope of work for this task force is split into three workstreams, a
   - Addressing for where to send these activities
   - Additional properties to improve federation of moderation activities (e.g., category and evidence on Flag Activities)
   - Inter-server communication on moderation activities
-- Content labeling, warnings, and annotations
+- Content warnings, labels, and annotations (#41)
 
 This taskforce is intended to be ongoing, as the work of trust and safety is an ongoing matter. Additional work items may come in from the SocialCG or the taskforce, and be added to future workstreams.
 

@@ -12,6 +12,15 @@ It is used:
 
 **Note:** we cannot directly change or improve various software that implements ActivityPub within the scope of this Taskforce, for that, please file issues with the respective project's issue trackers, potentially cross referencing issues here.
 
+## Taskforce Leadership
+
+This taskforce is co-chaired by:
+
+- Emelia Smith ([@thisismissem](https://github.com/thisismissem) / [@thisismissem@hachyderm.io](https://hachyderm.io/@thisismissem))
+- Darius Kazemi ([@dariusk](https://github.com/dariusk) / [@darius@friend.camp](https://friend.camp/@darius))
+
+Emelia and Darius are responsible for coordinating and running the taskforce meetings, their primary role is to facilitate consensus-building among taskforce members. For more on what it means to be a chair in the context of W3C related taskforces or groups, see: https://www.w3.org/Guide/chair/role.html
+
 ## Scope of work
 
 The initial scope of work for this task force is split into three workstreams, as follows:

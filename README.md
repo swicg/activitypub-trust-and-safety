@@ -14,12 +14,12 @@ It is used:
 
 ## Taskforce Leadership
 
-This taskforce is co-chaired by:
+This taskforce is led by:
 
 - Emelia Smith ([@thisismissem](https://github.com/thisismissem) / [@thisismissem@hachyderm.io](https://hachyderm.io/@thisismissem))
 - Darius Kazemi ([@dariusk](https://github.com/dariusk) / [@darius@friend.camp](https://friend.camp/@darius))
 
-Emelia and Darius are responsible for coordinating and running the taskforce meetings, their primary role is to facilitate consensus-building among taskforce members. For more on what it means to be a chair in the context of W3C related taskforces or groups, see: https://www.w3.org/Guide/chair/role.html
+Emelia and Darius are responsible for coordinating and running the taskforce meetings, their primary role is to facilitate consensus-building among taskforce members.
 
 ## Scope of work
 

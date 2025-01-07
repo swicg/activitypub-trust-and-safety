@@ -4,14 +4,29 @@
 <head>
   <meta charset="utf-8" />
   <title>ActivityPub Trust & Safety Taskforce Report</title>
-  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove" defer></script>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c-common" defer class="remove"></script>
   <script class="remove">
     // All config options at https://respec.org/docs/
     var respecConfig = {
-      specStatus: "CG-DRAFT",
       editors: [{ name: "Emelia Smith", url: "https://hachyderm.io/@thisismissem", w3cid: "140818" }],
       github: "swicg/activitypub-trust-and-safety",
+      // We intend this to be the final report, so would be a community group draft:
+      specStatus: "CG-DRAFT",
+      isPreview: true,
       shortName: "ap-trust-and-safety",
+      latestVersion: "https://swicg.github.io/activitypub-trust-and-safety/",
+      edDraftURI: false,
+      otherLinks: [
+        {
+          key: "Related Documents",
+          data: [
+            {
+              value: "Initial Report",
+              href: "./initial-report/",
+            },
+          ],
+        },
+      ],
       xref: ["activitystreams-vocabulary", "activitystreams-core", "activitypub"],
       group: "socialcg",
     };
@@ -27,15 +42,16 @@
 <body>
   <section id="abstract">
     <p>
-      This report documents recommendations for ActivityPub and Activity Streams 2.0 to improve Trust and Safety on the Fediverse.
+      This report documents recommendations for ActivityPub and Activity Streams 2.0 to improve Trust and Safety on the
+      Fediverse.
     </p>
   </section>
-  <section id="sotd">
-    <p>This is required.</p>
-  </section>
+  <section id="sotd"></section>
   <section class="informative">
     <h2>Introduction</h2>
-    <p>This report is still in the process of being written. Please see the <a href="https://github.com/swicg/activitypub-trust-and-safety/issues">open issues</a> on GitHub instead.</p>
+    <p>This report is still in the process of being written. Please see the <a
+        href="https://github.com/swicg/activitypub-trust-and-safety/issues">open issues</a> on GitHub instead.</p>
   </section>
 </body>
+
 </html>

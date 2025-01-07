@@ -3,7 +3,7 @@
 Repository for a report on improving the trust, safety, and integrity of ActivityPub and related specifications by the W3C 
 [Social Web Community Group](https://www.w3.org/community/swicg/).
 
-Latest editor's draft: https://swicg.github.io/activitypub-trust-and-safety/ (work in progress)
+Latest editor's draft: https://swicg.github.io/activitypub-trust-and-safety/
 
 It is used:
 
@@ -25,15 +25,15 @@ Emelia and Darius are responsible for coordinating and running the taskforce mee
 
 The initial scope of work for this task force is split into three workstreams, as follows:
 
-- Initial Report (#32)
+- Initial Report ([#32](https://github.com/swicg/activitypub-trust-and-safety/issues/32))
   - Overview of current state of trust and safety on the Fediverse
   - Documenting how ActivityPub functionality is currently used
   - Best Practices & Recommendations
-- Improving Moderation Activities (Flag and Blocks) (#38)
+- Improving Moderation Activities (Flag and Blocks) ([#38](https://github.com/swicg/activitypub-trust-and-safety/issues/38))
   - Addressing for where to send these activities
   - Additional properties to improve federation of moderation activities (e.g., category and evidence on Flag Activities)
   - Inter-server communication on moderation activities
-- Content warnings, labels, and annotations (#41)
+- Content warnings, labels, and annotations ([#41](https://github.com/swicg/activitypub-trust-and-safety/issues/41))
 
 This taskforce is intended to be ongoing, as the work of trust and safety is an ongoing matter. Additional work items may come in from the SocialCG or the taskforce, and be added to future workstreams.
 

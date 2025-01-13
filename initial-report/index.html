@@ -43,6 +43,139 @@
     </p>
   </section>
   <section id="sotd"></section>
+  <section class="informative" id="foreword">
+    <h2>Foreword</h2>
+    <p>This report is still in the process of being written. Please see the <a
+        href="https://github.com/swicg/activitypub-trust-and-safety/issues/32">Initial Report issue</a> on GitHub for
+      current status.
+    </p>
+  </section>
+  <section>
+    <h2>Introduction</h2>
+    <p>ActivityPub and ActivityStreams are inherently social protocols, as such, they must adequately address trust
+      and
+      safety
+      for the success of the protocol and the platforms that built on top. At <time title="early 2025">present</time>,
+      ActivityPub as a protocol does not do enough to ensure the safety of people
+      using the platforms and trust between users and platform operators. We have previously seen issues with
+      moderation
+      reports for harmful behaviour being dropped due to incompatibilities between various ActivityPub software, we
+      regularly face issues with spam and abuse which result in people not trusting platforms that are ActivityPub
+      enabled. As stated by the Atlantic Council:
+    </p>
+    <blockquote>
+      <p>Risk and harm are set to scale exponentially and may strangle the opportunities generational technologies
+        create. We have a narrow window and opportunity to leverage decades of hard won lessons and invest in
+        reinforcing human dignity and societal resilience globally.</p>
+      <cite><a href="https://www.atlanticcouncil.org/in-depth-research-reports/report/scaling-trust/">Atlantic Council
+          -
+          Scaling Trust on the Web</a></cite>
+    </blockquote>
+
+    <p>This applies directly to ActivityPub and ActivityStreams: we are in a pivotal moment of early growth and
+      adoption, where we can leverage decades of learning on trust and safety for online social platforms to ensure
+      that
+      protocol meets the challenges that will face us as adoption grows.</p>
+
+    <p>Trust and safety isn't just about the needs of specific groups that use platforms, but about ensuring all those
+      that use platforms built on ActivityPub have experiences that align with their expectations to be free from
+      harassment, abuse, and inauthentic activity.</p>
+
+    <h3>The ActivityPub Trust and Safety Taskforce</h3>
+
+    <p>The taskforce brings together a variety of contributors from varying projects, platforms and organisation
+      sizes.
+      We aim to reach consensus with the documents we produce through regular meetings, and have agreed on an initial
+      scope of work that focuses on improving core protocol features that already exist and are in use, before working
+      on new features.</p>
+
+    <p>This initial report covers the following areas:</p>
+    <ul>
+      <li>Existing ActivityPub features and considerations for Trust & Safety</li>
+      <li>Guidance for implementers building ActivityPub software to ensure Trust & Safety, particularly of moderators
+        reviewing reported content.</li>
+      <li>The planned current streams of work for the taskforce</li>
+    </ul>
+  </section>
+  <section>
+    <h2>ActivityPub features and considerations for Trust & Safety</h2>
+    <p>TODO</p>
+
+    <h3>Reporting Activities and Actors</h3>
+    <p>TODO: something about reports and flag activities</p>
+
+    <h3>Security considerations about Spam and Abuse</h3>
+    <p>TODO: something about the spam and abuse considerations at protocol level</p>
+    <blockquote>
+      <p> Spam is a problem in any network, perhaps especially so in federated networks. While no specific mechanism
+        for
+        combating spam is provided in ActivityPub, it is recommended that servers filter incoming content both by
+        local
+        untrusted users and any remote users through some sort of spam filter. </p>
+      <cite>[[[ActivityPub]]] Specification, section B.6 Spam</cite>
+    </blockquote>
+
+    <h3>Blocking Users</h3>
+    <p>TODO: something about how whilst there is a block activity, it's not widely used due to safety issues</p>
+
+    <h3>Federation Content</h3>
+    <p>TODO: Something about how content is distributed, and how it can leak to unintended audiences through the use
+      of
+      embedding of foreign objects (e.g., announce by reference vs announce by embedding)</p>
+  </section>
+
+  <section>
+    <h2>Guidance for implementers building ActivityPub software</h2>
+    <p>TODO, some ideas:</p>
+
+    <ul>
+      <li>Federation Management (being able to block domains / actors)</li>
+      <li>General report management</li>
+      <li>Show the classification clearly, so the moderator is aware of the type of content they are about to review
+      </li>
+      <li>Blur all media until the moderator hovers to view greyscale version (re-blur when hover not detected or
+        mouseleave event)</li>
+      <li>Grayscale all media until the moderator clicks to toggle greyscale (allow toggle state back to greyscale)
+      </li>
+      <li>Mute all audio until the moderator requests audio</li>
+      <li>Allow the moderator to reclassify the report</li>
+      <li>Allow the service operator to choose from a list of harms or rules they want to receive reports about</li>
+      <li>Offer the end user a path to report an actor, behaviour, or content, e.g. “report this account” or “report
+        this post”</li>
+      <li>Condense the labels by type and classification, and label each report. Use standard metadata to classify and
+        present reported content.</li>
+      <li>Use standard language to describe the reporting context.</li>
+      <li>Consider a multi-step report submission process that allows fine-grained reporting</li>
+
+      <li>Ensuring users can delete media</li>
+      <li>Automatically closing open registration upon moderator inactivity</li>
+      <li>Open registration and the moderation responsibility that it entails</li>
+    </ul>
+
+    <h3>Federation Management</h3>
+    <p>Explain the different approaches to federation management: open federation, consent based federation and closed
+      federation. Explain how the implementation of federation management can directly impact your users experiences.
+    </p>
+
+    <h3>Open Registration Considerations</h3>
+    <p>Explain that whilst open registration can be desirable, it comes with the responsibility to be able to moderate
+      around the clock, and also should be implemented such that if a server becomes unmaintained, it automatically
+      closes, as to prevent that server from being used as a vector for abuse and spam</p>
+  </section>
+
+  <section>
+    <h2>Planned work of the taskforce</h2>
+    <p>TODO</p>
+
+    <h3>Initial Report</h3>
+    <p>TODO</p>
+
+    <h3>Improvements to Moderation Activities</h3>
+    <p>TODO: Improvements to Flag activities</p>
+
+    <h3>Content Warnings, Labels, and Annotations</h3>
+    <p>TODO</p>
+  </section>
 </body>
 
 </html>

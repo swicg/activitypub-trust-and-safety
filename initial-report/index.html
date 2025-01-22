@@ -52,17 +52,16 @@
   </section>
   <section>
     <h2>Introduction</h2>
-    <p>ActivityPub and ActivityStreams are inherently social protocols, as such, they must adequately address trust
-      and
-      safety
-      for the success of the protocol and the platforms that built on top. At <time title="early 2025">present</time>,
-      ActivityPub as a protocol does not do enough to ensure the safety of people
-      using the platforms and trust between users and platform operators. We have previously seen issues with
-      moderation
-      reports for harmful behaviour being dropped due to incompatibilities between various ActivityPub software, we
-      regularly face issues with spam and abuse which result in people not trusting platforms that are ActivityPub
-      enabled. As stated by the Atlantic Council:
-    </p>
+    <p>ActivityPub and ActivityStreams are inherently social protocols, as such,
+      they must adequately address trust and safety for the success of the
+      protocol and the platforms that built on top.</p>
+    <p> As an implementer of an ActivityPub service, if you were to only read
+      the ActivityPub and ActivityStreams 2.0 specifications, you would not have
+      enough knowledge to ensure trust and safety for your service. This report
+      aims to provide additional information to ensure you reach a baseline of
+      trust and safety in your ActivityPub software.</p>
+    <p>As noted by the Atlantic Council in their <em>Scaling Trust on the
+        Web</em> paper:</p>
     <blockquote>
       <p>Risk and harm are set to scale exponentially and may strangle the opportunities generational technologies
         create. We have a narrow window and opportunity to leverage decades of hard won lessons and invest in
@@ -72,10 +71,16 @@
           Scaling Trust on the Web</a></cite>
     </blockquote>
 
-    <p>This applies directly to ActivityPub and ActivityStreams: we are in a pivotal moment of early growth and
-      adoption, where we can leverage decades of learning on trust and safety for online social platforms to ensure
-      that
-      protocol meets the challenges that will face us as adoption grows.</p>
+    <p>This applies directly to ActivityPub software: we are in a pivotal moment
+      of early growth and adoption, where we can leverage decades of learning on
+      trust and safety for online social platforms to ensure that protocol meets
+      the challenges that will face us as adoption grows.</p>
+
+    <p>We have already seen issues with moderation reports for harmful behaviour
+      being dropped due to incompatibilities between various ActivityPub software,
+      we regularly face issues with spam and abuse, and have seen services taken
+      down by online harms related to user generated content. These issues result
+      in people not trusting platforms that are powered by ActivityPub.</p>
 
     <p>Trust and safety isn't just about the needs of specific groups that use platforms, but about ensuring all those
       that use platforms built on ActivityPub have experiences that align with their expectations to be free from

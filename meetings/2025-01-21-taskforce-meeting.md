@@ -34,7 +34,7 @@
 
 - Robert: I thought the structure looks very good. Seems to capture a lot of the issues that I've seen this group talk about. I imagine in the writing things could grow, but at least it's a good skeleton for me.
 
-- Emelia: Yeah, one section that I did want to add, which is kind of inspired by the... recent post by Mastodon.art about Pixelfed is an absolute bare minimum requirements section. 
+- Emelia: Yeah, one section that I did want to add, which is kind of inspired by the [recent post by Mastodon.art about Pixelfed](https://mastodon.art/@Curator/113866607769121751) is an absolute bare minimum requirements section. 
 
 - Emelia: Which is like, you're building  Fediverse software, your absolute bare minimum requirements are, if you openly accept Federation with everyone, you be able to block instances by domain. Particularly inbound federation but also outbound. I think there's that and also ability to receive reports on your instance and ability send reports. I think that's it. Maybe there's additional things?
 

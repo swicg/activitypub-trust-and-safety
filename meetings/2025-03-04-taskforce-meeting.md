@@ -21,6 +21,6 @@ This meeting didn't have a formal agenda as it's been a few weeks since the last
 
 The main outputs of this meeting were some discussion of next steps in the initial report, specifically:
 - breaking down the ActivityPub features section into individual subtasks: https://github.com/swicg/activitypub-trust-and-safety/issues/42
-- discussion the positioning of the report, where we are essentially writing a bridging document between what is formally defined in specifications, what exists in implementations, the issues or challenges faced, and where we see potential work happening.
+- discussion of the positioning of the report, where we are essentially writing a bridging document between what is formally defined in specifications, what exists in implementations, the issues or challenges faced, and where we see potential work happening.
 
 After the main meeting had concluded, I (Emelia) continued discussion for a new partipicant and provided a bit of a guide for what's required for Issue #1 about content warnings.

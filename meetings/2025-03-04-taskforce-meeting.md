@@ -6,6 +6,7 @@
 - Dmitri Z.
 - Jaz-Michael King (https://mastodon.iftas.org/@jaz)
 - Evan Prodromou (acct:evan@cosocial.ca)
+- Echo (https://tech.lgbt/@chaosexanima)
 
 ## Agenda
 

@@ -1,7 +1,7 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
+about: Suggest an idea or proposal for this taskforce to consider
+title: 'Idea: '
 labels: ''
 assignees: ''
 

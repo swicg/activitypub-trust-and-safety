@@ -1,3 +1,5 @@
+# 2025-05-13: ActivityPub Trust and Safety Task Force Meeting
+
 ## Agenda:
 
 1. IP Protection Note Reminder:
@@ -27,27 +29,27 @@ You can find information on how to join the meeting in the [SWICG calendar](http
 - Emelia: yes, there was one voice strongly stating that the data model should be used for content warnings, content labels, and content annotations. The theory is that web annotations works for all these purposes but when I ask for anyone to show use cases where it applies, I am left without an example.
 - Darius: web annotations was designed for annotating documents on the web via a browser.
 - Emelia: yes, it contains things like ways to specify text ranges on a document.
-- Emelia: I think there is a difference between a content warning and a content annotation. A warning has specific user interactions desired as the outcome of it vs an annotation. Something like Community Notes for an annotation is "you see the post still but here is text provided by another user". 
+- Emelia: I think there is a difference between a content warning and a content annotation. A warning has specific user interactions desired as the outcome of it vs an annotation. Something like Community Notes for an annotation is "you see the post still but here is text provided by another user".
 - Jaz: it seems to me that a content warning is just a label applied generally by the author. I've seen people ask for the ability to post hoc add content warnings. I think the data model could and maybe should be separate from the client action. And different clients can do different things with different labels and sources of labels.
 - Darius: what is, data-wise, the difference between content warnings and labels/annotations?
 - Emelia: Content warnings are free text. For labels, there would be something like a label vocabulary that is standardized.
 - Darius: so content warnings would be text in a field; labels would be Objects that can be referenced and embedded in other contexts.
-- a: so would "label" = "structured linked data reference", while "warning" = "unstructured freeform text"? 
-- Jaz: this sounds like we are formalizing the user experience we've observed for content warnings on mastodon, which I find unfit for purpose. The fact that one platform does something with collapsing... a well structured model for this stuff would allow for new emergent activites based on the data. I tentatively agree that a preference would be for vocabularies to exist that clients could make use of to help labeling and warning, but I am itching at the thought that we are formalizing an observed experience from one microblogging software. Instead of trying to put formality around the thing we see and the way it's seen in certain clients, if we unravel and rewind that and think about it from an agnostic perspective we can come up with a way to provide developers ways to come up with what they need while giving audiences more freedom too. 
+- a: so would "label" = "structured linked data reference", while "warning" = "unstructured freeform text"?
+- Jaz: this sounds like we are formalizing the user experience we've observed for content warnings on mastodon, which I find unfit for purpose. The fact that one platform does something with collapsing... a well structured model for this stuff would allow for new emergent activites based on the data. I tentatively agree that a preference would be for vocabularies to exist that clients could make use of to help labeling and warning, but I am itching at the thought that we are formalizing an observed experience from one microblogging software. Instead of trying to put formality around the thing we see and the way it's seen in certain clients, if we unravel and rewind that and think about it from an agnostic perspective we can come up with a way to provide developers ways to come up with what they need while giving audiences more freedom too.
 - Darius: I largely agree with Jaz. How does this work in ATProto with content labelers?
-- Jaz: You bring your own vocabulary, and the PDS can apply some number of actions... hide, blur, warn, maybe some other things. Labeler A can say "depiction of war" and "blur" and Labeler B can say "war images" and "hide". 
-- Emelia: https://docs.joinmastodon.org/entities/Filter/#filter_action mastodon now has the same three actions with content filtering 
+- Jaz: You bring your own vocabulary, and the PDS can apply some number of actions... hide, blur, warn, maybe some other things. Labeler A can say "depiction of war" and "blur" and Labeler B can say "war images" and "hide".
+- Emelia: https://docs.joinmastodon.org/entities/Filter/#filter_action mastodon now has the same three actions with content filtering
 - Emelia: the difference between a label and content warning is the former is structured linked data that can be referenced, latter is unstrutured freeform text. For labels you have structured labels, but I'm not saying there should be one vocabulary but many vocabularies. Bluesky has a base set of labels that they have defined, Mastodon would probably also want to have theirs.
 - Darius: so a vocabulary should be an Unordered Collection of Label objects.
 - Emelia: yes, you can see it in FIRES: https://fires.fedimod.org/reference/protocol/labels.html
 - Emelia: I don't want us to be defining the labels. Just how you define the labels and share them, and how you associate a label with an object in the AP spec. You could cram all this into web annotations but I don't think that makes sense because we would be extending the web annotations vocabulary anyway since it doesn't have a notion of labels.
-- a: What if there are two labels, one says "war" and one says "depiction of war"? Who gets to decide two labels are the same thing? Maybe we have a two-tier system where a label publisher can suggest that their label is a subclass or equivalent label. 
+- a: What if there are two labels, one says "war" and one says "depiction of war"? Who gets to decide two labels are the same thing? Maybe we have a two-tier system where a label publisher can suggest that their label is a subclass or equivalent label.
 - Jaz: no one really finds equivalences in that ecosystem. It's more just a choice of who people subscribe to.
 - Emelia: right, we want to avoid string matching any more.
 - Jaz: why don't we just adopt what is on the FIRES link you posted?
 - Emelia: https://github.com/fedimod/fires/issues/68 issue on specifying recommended actions on content
 - Darius: do we need to specify actions as objects?
-- denny:  I don't see why specifying the action is within the ambit of a labeler's job. Wouldn't have occured to me as an application developer to look for action information in the label object. 
+- denny:  I don't see why specifying the action is within the ambit of a labeler's job. Wouldn't have occured to me as an application developer to look for action information in the label object.
 - Emelia: I think you make it a string and we specify a set of starter strings
 - Darius: are we reinventing mime-types here?
 - Emelia: maybe we publish a repository of possible actions?
@@ -71,15 +73,15 @@ You can find information on how to join the meeting in the [SWICG calendar](http
 - Jaz: why can't I personally write a `summary` of "Trigger warning: content includes blah" -- I use Trigger warning specifically because that's different from CW.
 - Emelia: if we say `summary` is that, and then labels actually drive content warnings, how do you have software indicate "the author meant this as a CW" vs "the author meant to collapse".
 - a: for collapsing, there's the `sensitive` property. Mastodon doesn't distinguish between `summary` and `sensitive`
-- Jaz: let's take this out of mastodon and into a blog. What if a blog author writes warnings into the top of the post. That's fine. Let's have free text and have it not mean anything other than it's free text. We don't need a separate property for content warnings. 
+- Jaz: let's take this out of mastodon and into a blog. What if a blog author writes warnings into the top of the post. That's fine. Let's have free text and have it not mean anything other than it's free text. We don't need a separate property for content warnings.
 - Emelia: So perhaps expected behavior is: summary is free text; sensitive tells people whether things are collapsed or not; labels can be interpreted separately.
-- a: i still think that `summary` can be correct even for content warnings, it's more about how much do we want to be able to signal the purpose of it? in AS2 it is defined as a "summary" in the sense that a plaintext representation of an object would have it be the secondary bit next to the name/title 
+- a: i still think that `summary` can be correct even for content warnings, it's more about how much do we want to be able to signal the purpose of it? in AS2 it is defined as a "summary" in the sense that a plaintext representation of an object would have it be the secondary bit next to the name/title
 - Jaz: I have found `sensitive` to be nonsense. maybe we just have it all be labels
 - Darius: seems like `sensitive` is an example of the phase 2 "here is a recommended action"
 - Jaz: with structured labels we are going to want actions.
 - Jaz: can I get clarity. Emelia I think this is your contention, I am looking at FIRES labels. I think I understand that you won't or can't ascribe an Actor to the Activity of labeling a thing. I'm trying to wrap my head around how we do a spec where we talk about label discovery and representation but we don't add in who is responsible for applying labels.
 - Emelia: we could add `attributedTo`. In the case of FIRES I don't need it because the label _is_ the provider of the label but for a more generic case we could.
-- a: https://www.w3.org/TR/annotation-model/#motivation-and-purpose a Label could also extend from an Annotation, it can be multiple things depending on the properties you want it to have 
+- a: https://www.w3.org/TR/annotation-model/#motivation-and-purpose a Label could also extend from an Annotation, it can be multiple things depending on the properties you want it to have
 
 ## Outcomes
 

@@ -1,4 +1,4 @@
-# ActivityPub Trust and Safety Task Force Meeting
+# 2024-11-12: ActivityPub Trust and Safety Task Force Meeting
 
 ## Attending
 
@@ -6,7 +6,7 @@
 - Evan Prodromou <acct:evanprodromou@socialwebfoundation.org>
 - Julian Lam <@julian@community.nodebb.org>
 - Dan Appelquist <@torgo@mastodon.social> - TAG co-chair & busybody
-- Darius Kazemi <@darius@friend.camp>                   
+- Darius Kazemi <@darius@friend.camp>
 - Andy Piper <@andypiper@macaw.social>
 - Lisa Dusseault <@lisarue@mastodon.geekery.org>
 - Estelle Weyl <@estelle@front-end.social>
@@ -37,7 +37,7 @@ Mailing list notice: https://lists.w3.org/Archives/Public/public-swicg/2024Nov/0
      - content warnings / labeling, as to move away from misusing `summary` on `Note` ( [#1](https://github.com/swicg/activitypub-trust-and-safety/issues/1), [#4](https://github.com/swicg/activitypub-trust-and-safety/issues/4) )
      - define Block activity handling / sending for S2S, currently only defined for C2S ( [#23](https://github.com/swicg/activitypub-trust-and-safety/issues/23) )
      - communicating updates and conversations relating to Flag activities ( [#6](https://github.com/swicg/activitypub-trust-and-safety/issues/6), [#7](https://github.com/swicg/activitypub-trust-and-safety/issues/7) )
-     - Explicitly out of scope, but we can include a recommendation in our report(s) about these if necessary: 
+     - Explicitly out of scope, but we can include a recommendation in our report(s) about these if necessary:
        - federation management, i.e., FediBlock, since "instances" are not a thing in ActivityPub, but just a side-effect of S2S.
        - quote posts (has [existing FEPs](https://socialhub.activitypub.rocks/t/disambiguating-various-interpretations-of-a-quote-feature-pre-fep/3426))
        - reply controls (has existing FEPs / implementations - [FEP-7458](https://codeberg.org/fediverse/fep/src/branch/main/fep/7458/fep-7458.md), [reply control discussions](https://socialhub.activitypub.rocks/t/fep-5624-per-object-reply-control-policies/2723))
@@ -58,7 +58,7 @@ Introductions from the above people.
 
 **RESOLVED:** 5pm CET Tuesdays (the time of this meeting) is OK for recurring meetings.
 
-Evan reminded participants to use GitHub to help folks who have to participate asynchronously may do so. 
+Evan reminded participants to use GitHub to help folks who have to participate asynchronously may do so.
 Staging process will be to be followed: https://github.com/swicg/potential-charters/blob/main/stage-process.md
 
 **Proposal:** Meeting cadence every two weeks (same time)
@@ -69,10 +69,10 @@ Staging process will be to be followed: https://github.com/swicg/potential-chart
 
 ### Discussion of Scope
 
-Evan asked about bundling things in the scope together?  Emelia explained that Trust and Safety can have requirements on a number of documents, many of which might not be "owned" by the Trust and Safety TF.  E.g. Reply-control is being defined elsewhere but we can make recommendations to implementors about it. Similarly we aren't defining the S2S HTTP message signatures, but we can make a recommendation to use that.  
+Evan asked about bundling things in the scope together?  Emelia explained that Trust and Safety can have requirements on a number of documents, many of which might not be "owned" by the Trust and Safety TF.  E.g. Reply-control is being defined elsewhere but we can make recommendations to implementors about it. Similarly we aren't defining the S2S HTTP message signatures, but we can make a recommendation to use that.
 
 The scope proposed (in the agenda and at the link in the agenda) is roughly in priority order or order of work. The Flag mechanisms are somewhat under-specified.  We can improve those mechanisms.  Some examples:
- * Mastodon only accepted 500 characters in a report text, but misskey can send ~4000, this lead to interoperability issues (and has since been fixed).  
+ * Mastodon only accepted 500 characters in a report text, but misskey can send ~4000, this lead to interoperability issues (and has since been fixed).
  * Mastodon expects Actor in the list of `objects` in a Flag Activity, although the spec doesn't requiring that, so Flags without the actor in the `objects` list get dropped.
 
 Dan: something that might be useful, in the TAG we've been developing the [privacy principles documentd](
@@ -82,12 +82,12 @@ Emelia: we need some idea of where to send reports as well. right now we send th
 
 Darius agreed with this and pointed to https://fediverse-governance.github.io/#9.-tooling-recommendations for research findings relevant to these goals.
 
-Content warnings and labeling is a whole interesting area; we'd probably like to be able to label posts as containing adult content or violence.  Standard labels that others can reference can help others in the fediverse handle that content appropriately. 
+Content warnings and labeling is a whole interesting area; we'd probably like to be able to label posts as containing adult content or violence.  Standard labels that others can reference can help others in the fediverse handle that content appropriately.
 
 Block activity handling isn't very well specified.  Does the blocked user's server get a Block activity?  We should define what we expect the behavior to be in the S2S part of the flow.
 
 Evan in chat: Block is defined as a SHOULD NOT for delivery. https://www.w3.org/TR/activitypub/#block-activity-outbox
-Yet some implementations do deliver Blocks. 
+Yet some implementations do deliver Blocks.
 
 Communication about flag activity: should there be any way to reply to somebody who makes a report to reply - for acknowledgement, for requesting clarification, or for communicating outcomes?  There's not good communication between moderation teams, which results in friction.  Domains have been fediblocked due to poor communication about moderation activities already.
 
@@ -95,7 +95,7 @@ Darius: [research-based recommendations from me on communication around blocks/f
 
 Emelia: Now for the items I think should be outside of the scope of work for the taskforce initially:
 
-Emelia: Quote posts and reply controls are very much wanted by folks in the Fediverse.  There is an implementation of reply controls and a few people are trying to get a FEP started.  There are 4 different ways of doing quote posts (misskey way, fedibird way, object links, and mastodon approach)  Each of these approaches have safety and privacy concerns about them. This Task Force wouldn't necessarily be defining these mechanisms but can help the groups defining these think through the T&S considerations. 
+Emelia: Quote posts and reply controls are very much wanted by folks in the Fediverse.  There is an implementation of reply controls and a few people are trying to get a FEP started.  There are 4 different ways of doing quote posts (misskey way, fedibird way, object links, and mastodon approach)  Each of these approaches have safety and privacy concerns about them. This Task Force wouldn't necessarily be defining these mechanisms but can help the groups defining these think through the T&S considerations.
 
 (Chat provided some additional links: https://w3id.org/fep/7458, https://socialhub.activitypub.rocks/t/fep-5624-per-object-reply-control-policies/2723 )
 
@@ -113,7 +113,7 @@ Dan Appelquist says: suggest talking about the.g. "Tackling issues that improve 
 
 Emelia: Are there additional areas we should look at?
 
-Evan: maybe look into automatic detection for spam or keywords? ML models, etc. that can help surface problematic content. Something potentially useful to investigate.  Trust & safety can also consider the effectiveness of systems that don't entirely rely on human judgement and when it's a good idea to have a human in the loop.  
+Evan: maybe look into automatic detection for spam or keywords? ML models, etc. that can help surface problematic content. Something potentially useful to investigate.  Trust & safety can also consider the effectiveness of systems that don't entirely rely on human judgement and when it's a good idea to have a human in the loop.
 
 Emelia: As an example of more automated detection, [IFTAS CCS](https://about.iftas.org/activities/moderation-as-a-service/content-classification-service/) does PhotoDNA and automatic filing of reports with [NCMEC](https://www.missingkids.org/home), and can be extended to include NCII and TVEC classification.
 
@@ -121,7 +121,7 @@ Emelia: Some naive Bayes filtering "spam or ham", there is a project working on 
 
 Emelia: We should also have humans involved to make final decisions. For majority of fediverse, the human touch makes a difference in how we moderate our communities. Be very careful with overly algorithmic applications because that creates its own trust and safety issues. For example a model going awry can cut off people from their entire network of communication.
 
-Wes: I think there is possibly a complementary interaction between proactive (automatic) and reactive (flagging, human-based) moderaton that could be well specified. 
+Wes: I think there is possibly a complementary interaction between proactive (automatic) and reactive (flagging, human-based) moderaton that could be well specified.
 
 Wes: Transparency is key. You want to know what is done by a human and what is done by an automated process.
 

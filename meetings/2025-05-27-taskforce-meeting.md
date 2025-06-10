@@ -1,3 +1,5 @@
+# 2025-05-27: ActivityPub Trust and Safety Task Force Meeting
+
 ### Agenda:
 
 1. IP Protection Note Reminder:
@@ -14,16 +16,17 @@ We support contributions to the Agenda, please comment if there is something tha
 You can find information on how to join the meeting in the [SWICG calendar](https://www.w3.org/events/meetings/a54ae3c9-89bc-4bb1-b9db-e9494d2100e1/20250121T110000/)
 
 ### Attendance
-    - Jaz
-    - Emelia (partially)
-    - Darius
-    - Lisa
-    - Julian
+
+- Jaz
+- Emelia (partially)
+- Darius
+- Lisa
+- Julian
 
 ### Notes
 
 - Emelia: Just a quick note that sometimes I won't be available for meetings, or won't be fully focused during them, as I've some health issues that lead to significant fatigue and spontaneous coughing fits. In my abscence, please do continue to discuss issues or file new isssues, and take meeting notes (you can use hackmd and open a pull request with them, or drop the link to them to Emelia via email: emelia@brandedcode.com).
-- Julian: next Forums/Discussion TF meeting, talking about the idea of having one reply tree across multiple communities and multiple categories. Who "owns" a tree when cross posting? Is it the author, is anyone, something else? Early discussions right now around writing a FEP. Many implementations have reply controls of some kind or another. 
+- Julian: next Forums/Discussion TF meeting, talking about the idea of having one reply tree across multiple communities and multiple categories. Who "owns" a tree when cross posting? Is it the author, is anyone, something else? Early discussions right now around writing a FEP. Many implementations have reply controls of some kind or another.
 - Julian: Mastodon FASPs for discovery... T&S thoughts?
     - Emelia: the FASP protocol is that only object IDs of activities are sent to the FASP, and then the FASP has to request those like an ActivityPub server would. From a user's perspective they can domain block a FASP if they want. The FASP is opt-in on a server administrator level, like a relay. FASPs are required to have terms of service and data sharing policies, and the UI might give you a snippet you can paste into your own Terms of Service when you subscribe to a FASP. Currently the only FASP that exists is a user discovery one. The FASP protocol already implements the latest version of HTTP message signatures RFC-9421. It will eventually be extended to do say T&S or media processing etc.
     - https://github.com/mastodon/fediverse_auxiliary_service_provider_specifications/

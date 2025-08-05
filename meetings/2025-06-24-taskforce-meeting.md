@@ -17,6 +17,7 @@ You can find information on how to join the meeting in the [SWICG calendar](http
 
 - Emelia Smith @thisismissem@hachyderm.io
 - Evan Prodromou <web+acct:evan@cosocial.ca>
+- Jaz
 
 
 ## Minutes:

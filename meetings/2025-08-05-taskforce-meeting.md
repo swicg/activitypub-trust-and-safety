@@ -21,6 +21,7 @@ Attendance:
   - as:sensitive has a specific range that doesn't include Link, it is Objects only so maybe that needs to be expanded
     - expand as:sensitive scope to `Object | Link`
       - https://gist.github.com/evanp/1321857549440c2de19f38e7019dec41
+      - See: https://github.com/swicg/activitypub-trust-and-safety/issues/97
 - issue with "indexable" flag
   - Julian: someone found out their profile was replicated on my site, and they were upset about it. It was suggested I use Mastodon's `indexable` flag to determine whether I can replicate. but it's not part of activitypub so I didn't want to do it. maybe if we standardize it, could it be useful for this?
   - Emelia: there should be some FEPs written for `indexable` and `discoverable`.

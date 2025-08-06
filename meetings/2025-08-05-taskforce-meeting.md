@@ -53,3 +53,4 @@ Attendance:
   - Evan: add an issue to expand the scope of as:sensitive to `Link` as well as `Object`
   - Darius: talk to w3c about funded task force work in general and report back
   - Evan: review and finish for the report any T&S features in AS2 and AP core
+  - Emelia / Darius: Decide on a new meeting time & schedule.

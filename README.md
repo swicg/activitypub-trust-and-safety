@@ -47,6 +47,12 @@ In addition to this repository, conversation also occurs at:
 * [Fediverse Enhancement Protocols](https://codeberg.org/fediverse/fep) repository (for related specification under
   incubation)
 
+## Meetings
+
+The ActivityPub Trust & Safety Taskforce meets on the first Wednesday of every month at 10:00–11:00 Eastern Daylight Time (16:00-17:00 CEST).
+
+You can subscribe to the [SWICG Calendar](https://www.w3.org/events/meetings/a54ae3c9-89bc-4bb1-b9db-e9494d2100e1/) for the meetings.
+
 ## Contributing to the Repository
 
 Use the standard fork, branch, and pull request workflow to propose changes to

@@ -51,7 +51,7 @@ In addition to this repository, conversation also occurs at:
 
 The ActivityPub Trust & Safety Taskforce meets on the first Wednesday of every month at 10:00–11:00 Eastern Daylight Time (16:00-17:00 CEST).
 
-You can subscribe to the [SWICG Calendar](https://www.w3.org/events/meetings/a54ae3c9-89bc-4bb1-b9db-e9494d2100e1/) for the meetings.
+You can subscribe to the [SWICG Calendar](https://www.w3.org/events/meetings/29a5bd4f-bb6e-4830-bbf7-7ba290e89afa/) for the meetings. You can see [past meetings](https://www.w3.org/events/meetings/a54ae3c9-89bc-4bb1-b9db-e9494d2100e1/) on the calendar too.
 
 ## Contributing to the Repository
 

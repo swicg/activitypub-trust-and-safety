@@ -92,3 +92,7 @@
 - [ ] Emelia: writing first pass at Content Labels FEP (4c96)
 - [ ] Evan: review and finish for the report any T&S features in AS2 and AP core (carried over)
 - [ ] Evan: submit feedback re: [implementor best practices](https://swicg.github.io/activitypub-trust-and-safety/initial-report/)
+
+## Addendum
+
+- Issue #1 has been closed as "not planned"

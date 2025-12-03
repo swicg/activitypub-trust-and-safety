@@ -18,4 +18,4 @@ Agenda:
 
 We support contributions to the Agenda, please comment if there is something that we need to address during the meeting.
 
-You can find information on how to join the meeting in the [SWICG calendar](https://www.w3.org/events/meetings/a54ae3c9-89bc-4bb1-b9db-e9494d2100e1/20250121T110000/)
+You can find information on how to join the meeting in the [SWICG calendar](https://www.w3.org/events/meetings/29a5bd4f-bb6e-4830-bbf7-7ba290e89afa/)

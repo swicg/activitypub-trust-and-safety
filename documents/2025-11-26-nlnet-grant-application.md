@@ -26,7 +26,7 @@ I'm the founder and co-lead of the taskforce, where I've been coordinating what 
 
 ## Usage
 
-The budget will be used to fund members of the taskforce to write the specification and report documents, which usually require significant time investment. Each of the above mentioned work areas require one or more FEP documents to be written, or a WBC Report to be written.
+The budget will be used to fund members of the taskforce to write the specification and report documents, which usually require significant time investment. Each of the above mentioned work areas require one or more FEP documents to be written, or a W3C Report to be written.
 
 Additionally, I'd like to allocate funds to the management of the taskforce meetings, and hiring a scribe for the meetings (as the lack of a dedicated scribe has caused communication issues).
 

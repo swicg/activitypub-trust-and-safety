@@ -13,7 +13,7 @@
         {
           name: "a",
           url: "https://trwnh.com/",
-          note: "sections on granular control, existing activities"
+          note: "sections on flexible control, existing activities"
         }
       ],
       github: "swicg/activitypub-trust-and-safety",
@@ -150,7 +150,7 @@
       </blockquote>
       <p class="note">In practice, despite the guidance that outbox servers should not deliver Block activities to their object, existing softwares currently deliver Block activities to their object. Philosophically, this is done under the assumption that the remote inbox is being managed by a server instead of being visible to any users directly; the motivation to deliver Block activities is so that trustworthy servers can enforce the Block remotely and extend the definition of "interact with" to include "viewing".</p>
       <p>The Ignore activity is not defined to have any side effects in [[[ActivityPub]]].</p>
-      <p class="note">Where possible, social applications using ActivityPub should not rely solely on Block and Ignore activities. See [[[#granular-control]]] for more information.</p>
+      <p class="note">Where possible, social applications using ActivityPub should not rely solely on Block and Ignore activities. See [[[#flexible-control]]] for more information.</p>
     </section>
 
     <section id="flag">
@@ -213,8 +213,8 @@
       closes, as to prevent that server from being used as a vector for abuse and
       spam</p>
 
-    <section id="granular-control">
-      <h3>Give users more granular control than just Block or Ignore</h3>
+    <section id="flexible-control">
+      <h3>Give users more flexible control than just Block or Ignore</h3>
       <p>When implementing ActivityPub, it can make sense to implement support for the Block and Ignore activities as described in [[[#block-and-ignore]]]. However, it is better to go beyond this limited functionality and allow people to more fully control what they see and how others can interact, outside of simple binary actions.</p>
       <section id="filters">
         <h4>Filters</h4>

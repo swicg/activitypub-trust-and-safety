@@ -9,6 +9,13 @@
     // All config options at https://respec.org/docs/
     var respecConfig = {
       editors: [{ name: "Emelia Smith", url: "https://hachyderm.io/@thisismissem", w3cid: "140818" }],
+      authors: [
+        {
+          name: "a",
+          url: "https://trwnh.com/",
+          note: "sections on flexible control, existing activities"
+        }
+      ],
       github: "swicg/activitypub-trust-and-safety",
       // This document is not expected to become a standard, so it's not on the
       // W3C recommendation track and is "unofficial"
@@ -22,6 +29,13 @@
       // Tags:
       xref: ["activitystreams-vocabulary", "activitystreams-core", "activitypub"],
       group: "socialcg",
+      localBiblio: {
+        scalingtrust: {
+          title: "Scaling Trust on the Web",
+          href: "https://www.atlanticcouncil.org/in-depth-research-reports/report/scaling-trust/",
+          publisher: "Atlantic Council",
+        }
+      }
     };
   </script>
   <style>
@@ -35,57 +49,43 @@
 <body>
   <section id="abstract">
     <p>
-      This is the initial report from the Social CG <a
-        href="https://github.com/swicg/activitypub-trust-and-safety">Taskforce on
-        Trust and Safety for ActivityPub</a>, ActivityStreams 2.0 and the
-      Fediverse. We've structured this document to outline why we need to think
-      about trust and safety, the current trust and safety features in
-      ActivityPub, the current areas of work we're undertaking to improve trust
-      and safety in ActivityPub, and advice for people building ActivityPub
-      enabled software.
+      This is the initial report from the Social CG <a href="https://github.com/swicg/activitypub-trust-and-safety">Task Force on Trust and Safety for ActivityPub</a>, Activity Streams 2.0, and the Fediverse. We've structured this document to outline why we need to think about trust and safety, the current trust and safety features in ActivityPub, the current areas of work we're undertaking to improve trust and safety in ActivityPub, and advice for people building ActivityPub-enabled software.
     </p>
   </section>
   <section id="sotd"></section>
-  <section class="informative" id="foreword">
+  <section id="foreword">
     <h2>Foreword</h2>
     <p>This report is still in the process of being written. Please see the <a
         href="https://github.com/swicg/activitypub-trust-and-safety/issues/32">Initial
         Report issue</a> on GitHub for current status.
     </p>
   </section>
-  <section>
+  <section id="conformance">
+  </section>
+  <section id="introduction">
     <h2>Introduction</h2>
-    <p>ActivityPub and ActivityStreams are inherently social protocols, as such,
-      they must adequately address trust and safety for the success of the
-      protocol and the platforms that built on top.</p>
+    <p>ActivityPub is an inherently social protocol, and as such, it must adequately address trust and safety for the success of the protocol and the platforms that are built with it.</p>
 
-    <p> As an implementer of an ActivityPub service, if you were to only read
-      the ActivityPub and ActivityStreams 2.0 specifications, you would not have
-      enough knowledge to ensure trust and safety for your service. This report
-      aims to provide additional information to ensure you reach a baseline of
-      trust and safety in your ActivityPub software.</p>
+    <p>As an implementer of an ActivityPub-enabled social platform, if you were to only read the ActivityPub, Activity Streams 2.0 Core, and Activity Vocabulary specifications, you would not have enough knowledge to ensure trust and safety for your service. This report provides additional information to ensure you can reach a baseline of trust and safety in your ActivityPub-enabled software.</p>
 
-    <p>As noted by the Atlantic Council in their <em>Scaling Trust on the
-        Web</em> paper:</p>
+    <p>As noted by the Atlantic Council in their [[[scalingtrust]]] paper:</p>
 
-    <blockquote>
+    <blockquote cite="https://www.atlanticcouncil.org/in-depth-research-reports/report/scaling-trust/">
       <p>Risk and harm are set to scale exponentially and may strangle the
         opportunities generational technologies create. We have a narrow window
         and opportunity to leverage decades of hard won lessons and invest in
         reinforcing human dignity and societal resilience globally.</p>
-      <cite><a href="https://www.atlanticcouncil.org/in-depth-research-reports/report/scaling-trust/">Atlantic
-          Council - Scaling Trust on the Web</a></cite>
+      <p>Atlantic Council — [[[scalingtrust]]]</p>
     </blockquote>
 
     <p>This applies directly to ActivityPub software: we are in a pivotal moment
       of early growth and adoption, where we can leverage decades of learning on
-      trust and safety for online social platforms to ensure that protocol meets
+      trust and safety for online social platforms to ensure that the protocol meets
       the challenges that will face us as adoption grows.</p>
 
-    <p>We have already seen issues with moderation reports for harmful behaviour
-      being dropped due to incompatibilities between various ActivityPub software,
-      we regularly face issues with spam and abuse, and have seen services taken
-      down by online harms related to user generated content. These issues result
+    <p>We regularly face issues with spam and abuse, and we have seen services taken
+      down by online harms related to user generated content. We have already seen issues with moderation reports for harmful behaviour
+      being dropped due to incompatibilities between various ActivityPub software. These issues result
       in people not trusting platforms that are powered by ActivityPub.</p>
 
     <p>Trust and safety isn't just about the needs of specific groups that use
@@ -93,58 +93,72 @@
       ActivityPub have experiences that align with their expectations to be free
       from harassment, abuse, and inauthentic activity.</p>
 
-    <h3>What is the ActivityPub Trust and Safety Taskforce?</h3>
+    <h3>What is the ActivityPub Trust and Safety Task Force?</h3>
 
-    <p>The taskforce brings together a variety of contributors from varying
-      projects, platforms and organisations, along with experts in trust and
-      safety, researchers and moderators. We work to reach consensus with the
+    <p>The task force brings together a variety of contributors from varying
+      projects, platforms, and organisations, along with experts in trust and
+      safety, researchers, and moderators. We work to reach consensus on the
       documents that we produce through regular meetings that are open for anyone
-      to participate in.</p>
+      to join.</p>
 
     <p>We have agreed on an initial scope of work that focuses on improving core
       protocol features that already exist and are in use, before working on new
       features.</p>
 
     <p>You can view our current scope of work on the <a
-        href="https://github.com/swicg/activitypub-trust-and-safety?tab=readme-ov-file#scope-of-work">Taskforce
-        GitHub Repository</a>, where you can also find out information about the
+        href="https://github.com/swicg/activitypub-trust-and-safety?tab=readme-ov-file#scope-of-work">task force's
+        GitHub repository</a>, where you can also find information about the
       leadership of the taskforce and other policies and information.</p>
 
     <h3>What is the Initial Report?</h3>
 
-    <p>This report from the ActivityPub Trust & Safety Taskforce, that you are
-      currently reading, covers the following topics:</p>
+    <p>This initial report from the ActivityPub Trust & Safety Task Force covers the following topics:</p>
 
     <ul>
-      <li>Existing ActivityPub features and considerations for Trust &
+      <li>An overview of existing ActivityPub features and considerations for Trust &
         Safety</li>
-      <li>Guidance for implementers building ActivityPub software to ensure
-        Trust & Safety, particularly of moderators reviewing reported
-        content.</li>
+      <li>Guidance for implementers building ActivityPub-enabled social software to ensure
+        Trust & Safety, particularly for moderators reviewing reported
+        content</li>
     </ul>
   </section>
-  <section>
-    <h2>ActivityPub features and considerations for Trust & Safety</h2>
+  <section id="existing-features">
+    <h2>Existing features and considerations for Trust & Safety</h2>
     <p>TODO</p>
 
-    <h3>Reporting Activities and Actors</h3>
-    <p>TODO: something about reports and flag activities</p>
-
     <h3>Security considerations about Spam and Abuse</h3>
-    <p>TODO: something about the spam and abuse considerations at protocol
-      level</p>
-    <blockquote>
-      <p> Spam is a problem in any network, perhaps especially so in federated
+    <p>The ActivityPub specification contains the following language regarding spam:</p>
+    <blockquote cite="https://www.w3.org/TR/activitypub/#security-spam">
+      <p>Spam is a problem in any network, perhaps especially so in federated
         networks. While no specific mechanism for combating spam is provided in
         ActivityPub, it is recommended that servers filter incoming content both
         by local untrusted users and any remote users through some sort of spam
         filter. </p>
-      <cite>[[[ActivityPub]]] Specification, section B.6 Spam</cite>
+      <p>[[[ActivityPub]]], B.6 Spam</p>
     </blockquote>
 
-    <h3>Blocking Users</h3>
-    <p>TODO: something about how whilst there is a block activity, it's not
-      widely used due to safety issues</p>
+    <p>TODO: expand on why this isn't enough</p>
+
+    <section id="block-and-ignore">
+      <h3>Block and Ignore activities</h3>
+      <p>The [[[activitystreams-vocabulary]]] defines the Block and Ignore activity types, which can be useful for people to control what they see and who can interact with them.</p>
+      <p>ActivityPub defines side effects for the Block activity when POSTed to the outbox. Per [[[ActivityPub]]]:</p>
+      <blockquote cite="https://www.w3.org/TR/activitypub/#block-activity-outbox" class="informative">
+        <p>The Block activity is used to indicate that the posting actor does not want another actor (defined in the object property) to be able to interact with objects posted by the actor posting the Block activity. The server SHOULD prevent the blocked user from interacting with any object posted by the actor.</p>
+        <p>Servers SHOULD NOT deliver Block Activities to their object.</p>
+        <p>[[[ActivityPub]]], 6.9 Block Activity</p>
+      </blockquote>
+      <p class="note">In practice, despite the normative recommendation for outbox servers to not deliver Block activities to their object, existing softwares currently deliver Block activities to their object. Philosophically, this is done under the assumption that the remote inbox is being managed by a server instead of being visible to any users directly; the motivation to deliver Block activities is so that trustworthy servers can enforce the Block remotely and extend the definition of "interact with" to include "viewing".</p>
+      <p>The Ignore activity is not defined to have any side effects in [[[ActivityPub]]].</p>
+      <p class="note">Relying solely on Block and Ignore activities does not provide people with adequate control of their experiences. See [[[#flexible-control]]] for more information.</p>
+    </section>
+
+    <section id="flag">
+      <h3>Flag activities</h3>
+      <p>The [[[activitystreams-vocabulary]]] defines the Flag activity type, which can be useful for reporting problematic content to moderators.</p>
+      <p>At present, there is no formal definition of how to process Flag activities, which properties one can expect or require to be included, or where to send these activities. Existing implementations have differing requirements for Flag activities, and they generally send these activities to standard inboxes. Philosophically, this is done under the assumption that the remote inbox is being managed by a server instead of being visible to any users directly; in cases where this is not true, a report may end up being delivered as an activity directly visible to the user being reported.</p>
+      <p>One goal of the Trust & Safety Task Force is to define a common profile for Flag activities and where to send them. For more information, see this document: <a href="moderation-activities">TODO</a></p>
+    </section>
 
     <h3>Federation Content</h3>
     <p>TODO: Something about how content is distributed, and how it can leak to
@@ -152,7 +166,7 @@
       announce by reference vs announce by embedding)</p>
   </section>
 
-  <section>
+  <section id="guidance">
     <h2>Guidance for implementers building ActivityPub software</h2>
     <p>TODO, some ideas:</p>
 
@@ -187,9 +201,8 @@
 
     <h3>Federation Management</h3>
     <p>Explain the different approaches to federation management: open
-      federation, consent based federation and closed federation. Explain how the
-      implementation of federation management can directly impact your users
-      experiences.
+      federation, consent-based federation, and closed federation. Explain how the
+      implementation of federation management can directly impact your users and their experiences.
     </p>
 
     <h3>Open Registration Considerations</h3>
@@ -198,6 +211,48 @@
       implemented such that if a server becomes unmaintained, it automatically
       closes, as to prevent that server from being used as a vector for abuse and
       spam</p>
+
+    <section id="flexible-control">
+      <h3>Give users more flexible control than just Block or Ignore</h3>
+      <p>When implementing ActivityPub, it can make sense to implement support for the Block and Ignore activities as described in [[[#block-and-ignore]]]. However, it is better to go beyond this limited functionality and allow people to more fully control what they see and how others can interact with them, outside of simple binary actions.</p>
+      <section id="filters">
+        <h4>Filters</h4>
+        <p>The functionality of an Ignore activity, commonly called a "mute" or sometimes "hide", is better served by a filter system. For compatibility mapping, ignoring or muting a user can be thought of as a filter whose context is scoped to the author of a post being that user: when an Object is `attributedTo` a certain actor, or when an Activity has a certain `actor`, it should not be shown to the user.</p>
+        <p>Other filter contexts are possible. The following properties are particularly useful for filtering:</p>
+        <ul>
+          <li>When a particular `actor` or `attributedTo` is present</li>
+          <li>When natural language properties like `content`, `summary`, or `name` contain a certain substring
+            <ul>
+              <li>The substring can be a simple match, or it might take word boundaries into consideration. Regular expressions can be used for even more control, and programmable filter functions or modules provide the highest level of control.</li>
+            </ul>
+          </li>
+          <li>When the object is part of a particular `context`, such as threaded conversations</li>
+          <li>When a particular `tag` is present</li>
+          <li>When a particular `location` is present</li>
+          <li>When the `published` datetime falls within a certain range</li>
+          <li>When the `id` (or some Link's `href`) contains a particular HTTP host</li>
+        </ul>
+        <p class="note">Recursive filters are also possible, such as filtering when the object is `inReplyTo` some other object whose `attributedTo` or `actor` has a particular value to be filtered; however, be wary of performance concerns when recursively fetching linked resources. Your software can avoid this problem by setting a maximum recursion limit, which might be 1.</p>
+      </section>
+      <section id="policies">
+        <h4>Policies</h4>
+        <p>The functionality of a Block applies to all interactions, but your users may reasonably want to only limit <em>some</em> interactions, or they may want to set conditions on certain usage of their content. This can be done with policies.</p>
+        <p>At this time, there is no broad consensus on a specific mechanism for signaling these policies, but some vocabularies are being developed or could be applied for this purpose. For example, [[[ODRL-Vocab]]] allows describing policies that explicitly grant permission for certain actions, although there is no enforcement attached — it is up to consumers to respect these policies. For social proof, publishers can provide acknowledgement of other people's resources, although there is no broad consensus here either. It is possible to respect some authorities by fetching canonical representations of certain collections defined by [[[ActivityPub]]]:</p>
+        <ul>
+          <li>`outbox`</li>
+          <li>`likes`</li>
+          <li>`shares`</li>
+          <li>`followers`</li>
+          <li>`following`</li>
+          <li>`liked`</li>
+        </ul>
+        <p>Furthermore, some other properties defined by the [[[activitystreams-vocabulary]]] are commonly used in social situations, with values that can be Collections (or might have canonical collections assoicated with them):</p>
+        <ul>
+          <li>`replies`</li>
+          <li>`context`</li>
+        </ul>
+      </section>
+    </section>
   </section>
 </body>
 

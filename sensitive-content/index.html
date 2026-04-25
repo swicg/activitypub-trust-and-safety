@@ -115,6 +115,10 @@
 				<li>`attachment`</li>
 			</ul>
 			<p>It is generally possible to mark individual attachments as sensitive (and in general, any object property node can contain the sensitive property), although currently some consumers might not understand this scoping. Where possible, publishers SHOULD scope the sensitive property to the parts of the document that are actually sensitive, and consumers SHOULD process only those parts of the document as sensitive as described in <a href="#processing"></a>.</p>
+			<p>Additionally, Mastodon considers the following properties to be safe to show:</p>
+			<ul>
+				<li>`summary`</li>
+			</ul>
 			<section id="extension" class="informative">
 				<h4>Explicitly signaling which properties are sensitive</h4>
 				<p>It can be worth defining an explicit signal for which properties are sensitive or not, so that there is no ambiguity on the publishing or consuming side.</p>

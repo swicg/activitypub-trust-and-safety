@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Handling sensitive content in ActivityPub</title>
+	<script src="https://www.w3.org/Tools/respec/respec-w3c" defer class="remove"></script>
+	<script class="remove">
+		// All config options at https://respec.org/docs/
+		var respecConfig = {
+			editors: [{ name: "a", url: "https://trwnh.com/", w3cid: "112982"}],
+			github: "swicg/activitypub-trust-and-safety",
+			// This document is not expected to become a standard, so it's not on the W3C recommendation track and is "unofficial"
+			noRecTrack: true,
+			specStatus: "unofficial",
+			// Disable Editors Draft and only have a latest published version on GitHub:
+			edDraftURI: false,
+			latestVersion: "https://swicg.github.io/activitypub-trust-and-safety/sensitive-content/",
+			shortName: "ap-trust-and-safety/sensitive-content",
+			// Tags:
+			xref: ["activitystreams-vocabulary", "activitystreams-core", "activitypub"],
+			group: "socialcg",
+			localBiblio: {
+				originalIssue: {
+					title: "w3c/activitypub#231: \"Sensitive Media\" tag",
+					href: "https://github.com/w3c/activitypub/issues/231",
+					authors: ["cwebber"],
+					date: "2017-06-18",
+					publisher: "GitHub"
+				},
+				miscellany: {
+					title: "ActivityPub Miscellaneous Terms",
+					href: "https://swicg.github.io/miscellany/",
+					publisher: "SWICG",
+					authors: ["Evan Prodromou"]
+				},
+				fepLinkPreview: {
+					title: "FEP-8967: Generating link previews for attached links",
+					href: "https://w3id.org/fep/8967",
+					authors: ["a"]
+				},
+				onCW: {
+					title: "On Content Warnings",
+					href: "https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings",
+					authors: ["Shel Raphen"]
+				}
+			}
+		};
+	</script>
+	<style>
+		body {
+			tab-size: 3;
+		}
+	</style>
+</head>
+
+<body>
+	<section id="abstract">
+		<p>Publishers may wish to mark certain content as "sensitive". This can be because the publisher recognizes the content as benefiting from a discretionary warning, or as a courtesy to their audience and their sensitivities regarding certain topics that may be triggering if viewed without a warning. Marking the content as "sensitive" typically hides the content behind a content warning, blurs or collapses media attachments, and requires click-through consent before viewing the content.</p>
+		<p>This approach currently lacks a formally defined processing model for specifying which properties are considered "sensitive" or "content". This document aims to define such a processing model and provide guidance on how sensitive content is handled by publishers and consumers of Activity Streams 2.0 documents, particularly in the fediverse.</p>
+	</section>
+	<section id="sotd">
+		<p>For more details on the status of this document, see the following GitHub issues:</p>
+		<ul>
+			<li>
+				<a href="https://github.com/swicg/activitypub-trust-and-safety/issues/118">Explainer: Handling sensitive content in ActivityPub (swicg/activitypub-trust-and-safety#118)</a>
+			</li>
+			<li>
+				<a href="https://github.com/swicg/activitypub-trust-and-safety/issues/117">Explainer: Content Warnings as they exist today (swicg/activitypub-trust-and-safety#117)</a>
+			</li>
+		</ul>
+	</section>
+  <section id="conformance">
+  </section>
+	<section id="history" class="informative">
+		<h2>History</h2>
+		<p>A history of content warnings as a feature is described in [[[onCW]]]:</p>
+		<blockquote cite="https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings">
+			<p>Blackle's CW design was incredibly simple. It was universally agreed upon by everyone involved in mastodon development at the time that this simple design was what made sense. There is a button in the compose box labeled "CW." Click on it and a box appears. Type anything in the box and now your post is collapsed like a forums-style spoiler box, with your content warning on top. Now you can post anything you want and allow others to opt into seeing it after having received an adequate warning.</p>
+			<p>Shel Raphen, [[onCW]], "Mastodon and Content Warnings"</p>
+		</blockquote>
+		<p>The history of certain terms being unofficially included in the official activitystreams namespace is described in [[[miscellany]]]:</p>
+		<blockquote cite="https://swicg.github.io/miscellany/#introduction">
+			<p>The first software packages that implemented [ActivityPub] began to appear in 2018 [...] Some terms were proposed for inclusion in the ActivityPub specification, but weren't included because of time constraints [...] In the absence of a clear extensions process, those terms were not given their own namespace or context document, but instead were defined in the default namespace for Activity Streams 2.0 [...] Newer [vendor-specific] extensions have been defined in [vendors'] own [namespaces]. The first few terms, though, remain undocumented in a formal specification.</p>
+			<p>Evan Prodromou, [[[miscellany]]], 1. Introduction</p>
+		</blockquote>
+
+	</section>
+	<section id="semantics">
+		<h2>Semantics</h2>
+		<p>One such unofficial term is `sensitive` (`https://www.w3.org/ns/activitystreams#sensitive`), which is defined in [[[miscellany]]] as follows:</p>
+		<blockquote>
+			<p>The sensitive property (a boolean) on an object indicates that some users may wish to apply discretion about viewing its content, whether due to nudity, violence, or any other likely aspects that viewers may be sensitive to. This is comparable to what is popularly called "NSFW" (Not Safe For Work) or "trigger warning" in some systems. Implementations may choose to hide content flagged with this property by default, exposed at user discretion. Original discussion in [[[[originalIssue]]]].</p>
+		</blockquote>
+	</section>
+	<section id="processing">
+		<h2>Processing model</h2>
+		<section id="cw">
+			<h3>Content Warnings</h3>
+			<p>When content is marked as sensitive, applications SHOULD prompt readers for consent prior to viewing the collapsed content (`content` at minimum). Applications MAY show information deemed non-sensitive to help readers decide whether they want to consent to viewing the content (by expanding the content). Applications SHOULD also allow readers to collapse content again after expanding it.</p>
+		</section>
+		<section id="link">
+			<h3>Sensitive Links</h3>
+			<p>When a `Link` is marked as sensitive, applications SHOULD prompt readers for consent prior to visiting the link target (`href`). Applications MAY show information deemed non-sensitive to help readers decide whether they want to consent to visiting the link target.</p>
+		</section>
+		<section id="scope">
+			<h3>Which properties are "sensitive"?</h3>
+			<p class="ednote" title="Requires further investigation">The text of this section is based on a preliminary survey and is not final.</p>
+			<p>When the sensitive property is set to `true`, the following properties are generally unsafe to show:</p>
+			<ul>
+				<li>`content`</li>
+			</ul>
+			<p>However, some implementations consider other properties to be similarly in scope of the sensitive property. For example, Mastodon considers the following properties to also be sensitive:</p>
+			<ul>
+				<li>`attachment`</li>
+			</ul>
+			<p>It is generally possible to mark individual attachments as sensitive (and in general, any object property node can contain the sensitive property), although currently some consumers might not understand this scoping. Where possible, publishers SHOULD scope the sensitive property to the parts of the document that are actually sensitive, and consumers SHOULD process only those parts of the document as sensitive as described in <a href="#processing"></a>.</p>
+			<p>Additionally, Mastodon considers the following properties to be safe to show:</p>
+			<ul>
+				<li>`summary`</li>
+			</ul>
+			<section id="extension" class="informative">
+				<h4>Explicitly signaling which properties are sensitive</h4>
+				<p>It can be worth defining an explicit signal for which properties are sensitive or not, so that there is no ambiguity on the publishing or consuming side.</p>
+				<p>Currently, there are no broadly agreed-upon approaches for this explicit signaling, but potential approaches include:</p>
+				<ul>
+					<li>A property that includes the safe information</li>
+					<li>A property that includes the unsafe information</li>
+					<li>A property (`@type: @vocab`) which indicates the exact properties to be hidden, for example:
+						<pre class="example" id="example-properties-default-context">
+							{
+								"@context": "https://www.w3.org/ns/activitystreams",
+								"as:sensitive": true,
+								"https://vocab.example/sensitiveProperties": [
+									{"id": "as:content"},
+									{"id": "as:attachment"}
+								]
+							}
+						</pre>
+						<pre class="example" id="example-properties-augmented-context">
+							{
+								"@context": [
+									{
+										"sensitive": "https://www.w3.org/ns/activitystreams#sensitive",
+										"sensitiveProperties": {
+											"@id": "https://vocab.example/sensitiveProperties",
+											"@type": "@vocab"
+										}
+									},
+									"https://www.w3.org/ns/activitystreams"
+								],
+								"sensitive": true,
+								"sensitiveProperties": [
+									"content",
+									"attachment"
+								]
+							}
+						</pre>
+					</li>
+				</ul>
+				<p>For object properties (those whose `@type` declares them as referencing an object `@id` instead of having a literal `@value`), it is possible to mark the object as sensitive; in these cases, it would be preferable to signal the objects as sensitive instead of signaling the property as sensitive.</p>
+				<pre class="example" id="example-scoping">
+					{
+						"@context": [
+							{
+								"sensitive": "https://www.w3.org/ns/activitystreams#sensitive"
+							},
+							"https://www.w3.org/ns/activitystreams"
+						],
+						"sensitive": true,
+						"preview": {
+							"sensitive": false
+						},
+						"attachment": [
+							{"sensitive": true},
+							{"sensitive": false},
+							{"sensitive": true}
+						]
+					}
+				</pre>
+			</section>
+		</section>
+	</section>
+	<section id="criticism" class="informative">
+		<h2>Criticism</h2>
+		<section id="watering-down">
+			<h3>Content warnings can be watered down</h3>
+			<p>From [[[onCW]]]:</p>
+			<blockquote cite="https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings">
+				<p>The first CW discourse came when people inevitably used CWs to make jokes. Your CW was the set-up, and the post body was the punchline, creating that comedic timing. Sometimes people made jokes using false content warnings, labeling their delicious hoagie as "lewd" for instance. This led to discourse about if it is disrespectful to people with PTSD to use CWs so frivolously and if unreliable CWs meant people would start opening CWs expecting something to not actually be what's on the tin, and then being shocked anyway.</p>
+				<p>People find it so difficult to not click the button that shows the post that eventually filtering was implemented that hides the post entirely rather than spoilering it.</p>
+				<p>There were complaints that Mastodon users were so liberal with the CWs that people had to click to open every single post. Some users responded to this by saying that CWs should be treated as "the subject line to an email" and that we should probably just CW every single post by default.</p>
+				<p>Being able to CW posts lead to an increased sense of freedom to discuss things others might not want to see, but it also led to pressure to avoid upsetting potentially anyone.</p>
+			</blockquote>
+		</section>
+
+		<section id="non-neutrality">
+			<h3>Content warnings are not neutral</h3>
+			<p>From [[[onCW]]]:</p>
+			<blockquote cite="https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings">
+				<p>When you are a person who experiences racism in your daily life, it's quite challenging to tag all mentions of politics. Your life is politicized. White lives are safe for general audiences, but Black lives need to be given a mature content rating in case it upsets a white person to read about racism. These labels aren't neutral. A value statement is implied by their labeling.</p>
+			</blockquote>
+		</section>
+
+		<section id="conflict">
+			<h3>Content warnings create conflicting norms</h3>
+			<p>From [[[onCW]]]:</p>
+			<blockquote cite="https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings">
+				<p>Mastodon's intense CW culture, where everyone constantly argued about what should and should not be hidden behind a content warning, resulted in the "meta" tag for posts about mastodon or which were a part of site wide discourse [...] People began to fight endlessly about if white people should CW racism too or if only BIPOC were exempt from CWing racism. Was it perhaps actually valorous and important to forcibly expose people to certain posts instead of using CWs? The arguing was exhausting and never stopped.</p>
+				<p>After all, Mastodon is decentralized. Different instances had different rules around what needed a content warning and when those instances interacted you would get inter-communal conflicts debating if they should defederate because their CW practices were incompatible. New people and instances were always joining Mastodon and every time it would reignite every single CW discourse topic over and over again.</p>
+				<p>Years into this, the consensus among Mastodon early adopters was that we had messed up. Our original CW design was backwards. We imported our Twitter workaround and turned it into a feature without substantial modification. It was the onus of the poster to filter out what every stranger might now want to see, instead of the onus of the reader to filter out what only they did not want to see. We discussed how tumblr did this correctly. Posts should have tags at the bottom, and users should opt into filtering those tags, rather than opting into seeing them.</p>
+			</blockquote>
+		</section>
+
+		<section id="tags-are-better">
+			<h3>Content labels are better than content warnings</h3>
+			<p>From [[[onCW]]]:</p>
+			<blockquote cite="https://shelraphen.com/on-content-warnings/#mastodon-and-content-warnings">
+				<p>On Mastodon, you could not curate your tags for a known audience, and what was hidden for one user would be hidden for all users. This meant anything that any individual might wish to have hidden behind a CW, even if that individual does not follow you, needed to be hidden just in case it was federated or boosted onto the timeline of someone who would want that CW.</p>
+				<p>On tumblr, tagging food was for organizing posts, and had the added effect that someone who wanted to hide all food from their timeline could put food on their blacklist. The tagging of food was neutral because it did not inherently hide the food it just described it as being food.</p>
+				<p>On Mastodon, all food was hidden, even if you did not want to hide it. This was not neutral. Food now felt scandalous and dangerous to discuss and share.</p>
+			</blockquote>
+			<p>For an approach involving content labels instead of content warnings, see the Task Force's work on <a href="../content-labels">Content Labeling</a> (WIP).</p>
+		</section>
+
+	</section>
+</body>
+
+</html>

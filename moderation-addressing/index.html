@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Addressing moderation activities to moderators</title>
+	<script
+		src="https://www.w3.org/Tools/respec/respec-w3c"
+		class="remove"
+		async
+	></script>
+	<script class="remove">
+		var respecConfig = {
+		specStatus: "CG-DRAFT",
+		editors: [{ name: "a", url: "https://trwnh.com/#a" }],
+		github: "swicg/activitypub-trust-and-safety",
+		shortName: "activitypub-trust-and-safety/moderation-addressing",
+		group: "socialcg",
+		edDraftURI: "https://swicg.github.io/activitypub-trust-and-safety/moderation-addressing/",
+		latestVersion: null,
+		};
+	</script>
+	<style>
+		pre, code {
+			tab-size: 3;
+		}
+		.term {
+			border: 1px solid currentColor;
+			border-radius: 0.25em;
+			padding: 0.5em;
+		}
+		.shacl-rules code {
+			background: hsl(200deg, 50%, 90%);
+		}
+	</style>
+</head>
+<body>
+	<section id="abstract">
+		<p>In many cases, moderation-related activities are currently sent to user-level inboxes. This document discusses approaches for discovering moderation actors that could be more appropriate recepients for moderation-level activities (including but not limited to Flag activities for reports).</p>
+	</section>
+	<section id="sotd"></section>
+	<section id="conformance"></section>
+	<section id="intro" class="informative">
+		<h2>Introduction</h2>
+		<p>Many deployments of ActivityPub use a hosted service model where users are managed by some host service. The host service is expected to be responsible for those users, and the host service is expected to have a group of moderators which handles reports about problematic content hosted by the host service on behalf of its users.</p>
+		<p>However, many of these deployments are running software which does not distinguish between moderators and users, and so they will send any moderation activity to the inboxes of the users where the problematic content is attributed to that user. Sending moderation-level activities to user-level inboxes is a problem in cases where activities sent to users are not passed to the host service itself. The assumption being made here is that all inboxes are handled by the host service itself, but this assumption isn't always true outside of the softwares making this assumption.</p>
+		<p>Consider a scenario where Alice is hosted by some Service. Alice posts problematic content, and Bob wants to report Alice's problematic content to the relevant authorities. Currently, many softwares will send the report to Alice instead of to the Service, as if assuming that Alice is the relevant authority for Alice. However, the actual social arrangement is that Alice is hosted by the Service. In this case, reporting Alice to Alice is not appropriate, because the Service will not see the report unless the Service is spying on Alice's inbox, or unless all inboxes are virtual inboxes handled by the same software controller. Additionally, Alice may see the report in Alice's own inbox, which could create social awkwardness at best and invite retaliation against Bob at worst.</p>
+	</section>
+	<section id="layers" class="informative">
+		<h2>Layering of services</h2>
+		<p>There are multiple layers at which "moderation" can be exercised.</p>
+		<section id="dns">
+			<h3>DNS</h3>
+			<p>Via WHOIS/RDAP information, you can obtain information about a DNS registry entry, including an entity with the "registrar" role, which in turn can have an entity with the "abuse" role, and entities can have associated vCard information to list contact emails / telephones / addresses. Getting the registrar's abuse contact allows you to report abuse of a DNS name, including pointing DNS records at machines or services which may be engaging in abusive behavior. But depending on the circumstances, it might make more sense to reach out to the "registrant" instead, first, or as well (if you believe the registrant is acting in good faith).</p>
+		</section>
+		<section id="http">
+			<h3>HTTP</h3>
+			<p>The HTTP Host responds to HTTP requests with HTTP response messages. The Host isn't necessarily storing the data, but it does provide the name-addressing layer and is "hosting" any resources identified by names on that Host. You can obtain information about the Host via mechanisms like RFC 6415 "Web Host Metadata". Given an HTTP resource, you can also potentially make use of HTTP headers such as Link; an appropriate link relation could identify abuse contacts. Links can be advertised at either the host level (via host-meta XRD/JRD) or the resource level (via Link headers). The Host might not always be the first point of contact; it is unclear who controls the HTTP response for a given resource, and therefore it could make sense to try to discover whether a specific hosted resource has its own abuse contact (again, assuming good faith).</p>
+		</section>
+		<section id="content">
+			<h3>Content model</h3>
+			<p>HTTP resource representations are processed based on the Content-Type of the representation. Especially in cases where HTTP is only being used as a transport for a virtual / overlay network, then obtaining a representation of the resource (via HTTP GET) can yield body content that contains its own abuse contact links, similar to Link headers in HTTP.</p>
+		</section>
+	</section>
+	<section id="prior-art" class="informative">
+		<h2>Prior art</h2>
+		<p>This problem space has been addressed within social ecosystems and content models prior to Activity Streams 2.0 and ActivityPub.</p>
+		<section id="sioc">
+			<h3>SIOC</h3>
+			<p>Semantically Interlinked Online Communities (SIOC) defines a data model based on user accounts, posts, forums, and sites (among other possible types). Forums have moderators, while sites have administrators. User accounts create posts which are contained by forums (and possibly threads in between).</p>
+			<section id="forum-moderators">
+				<h4>Reporting a problematic Post to a Forum's moderators</h4>
+				<p>If your entrypoint is a post and you want to report that post, then you follow the path `:has_container*/:has_moderator` to find the forum mods (because posts are part of forums and moderated like the forum itself):</p>
+				<ul>
+					<li>The :Post :has_container which is a :Forum (although there may be an intermediary :Thread as well)</li>
+					<li>The :Forum :has_moderator which is a :UserAccount (or multiple)</li>
+				</ul>
+			</section>
+			<section id="site-administrator">
+				<h4>Reporting a problematic Forum to a Site's administrators</h4>
+				<p>If you want to report the forum itself (where the posts are made), then you follow the path `:has_host/:has_administrator` to find the site admins (because forums are part of sites and moderated like the site itself):</p>
+				<ul>
+					<li>The :Forum :has_host which is a :Site</li>
+					<li>The :Site :has_administrator which is a :UserAccount (or multiple)</li>
+				</ul>
+			</section>
+			<section id="user-account">
+				<h4>Reporting a problematic UserAccount</h4>
+				<p>If your entrypoint is a user account and you want to report that user account, then it's a bit complicated. You can either:</p>
+				<ul>
+					<li>Find one of their posts and report that post to the forum mods; or</li>
+					<li>Find a forum they moderate or own, and report that forum to the site; or</li>
+					<li>See if they are a :member_of any particular :Usergroup, which can be a :usergroup_of a :Space (which is typically a :Site), then report that user account to the site admins.</li>
+				</ul>
+			</section>
+		</section>
+	</section>
+	<section id="design" class="informative">
+		<h2>Design considerations</h2>
+		<section id="delegation">
+			<h3>Delegation of authority</h3>
+			<p>Depending on the situation, you can report problematic content at any point along the chain of delegation, and escalate as needed:</p>
+			<ul>
+				<li>The resource owner (who made the "post")</li>
+				<li>The context moderator (who moderates the "thread" or "forum")</li>
+				<li>The site administrator (who hosts the "forum")</li>
+				<li>The HTTP resource's Link (with some currently-unspecified link relation)</li>
+				<li>The HTTP Host (who may or may not be the same as the site administrator)</li>
+				<li>The DNS registrant (who points the DNS name at the HTTP service)</li>
+				<li>The DNS registrar (who acts on behalf of the registrant)</li>
+			</ul>
+		</section>
+		<section id="trust">
+			<h3>Trusting linked points-of-contact</h3>
+			<p>You need to be able to trust that an abuse contact is actually the correct point-of-contact, because anyone can lie about who you should report to.</p>
+			<p>In some cases you can infer the chain based on the protocols being used, such as inferring that an https: resource is hosted by the HTTP Host, or inferring that an HTTP Host using a DNS name is dependent on the DNS registrant or registrar.</p>
+			<p>In cases where you can't infer this, a bidirectional link can establish trust.</p>
+		</section>
+	</section>
+	<section id="recommendations">
+		<h2>Recommendations</h2>
+		<p>Social agents wishing to report problematic content on hosted services using ActivityPub SHOULD use the flow defined in this section.</p>
+		<p class="warning">This flow is currently a work-in-progress.</p>
+		<section id="concepts">
+			<h3>Concepts</h3>
+			<p>A resource may have <dfn>service-level concerns</dfn> such as making a resource available on behalf of some other entity, and providing representations of it as content.</p>
+			<p>A resource may have <dfn>abuse considerations</dfn> when that resource or its content is used in a way that creates harm for people, either as individuals or as groups.</p>
+			<p>A <dfn>host</dfn> is an entity that is responsible for handling [=service-level concerns=].</p>
+			<p>A <dfn>moderator</dfn> is an entity that is responsible for handling [=abuse considerations=].</p>
+			<p>A [=moderator=] often moderates resources within the context of a given [=host=]. Moderation involves a [=moderator=] taking action against some content, such as making it unavailable or editing its content on that [=host=].</p>
+			<p>A resource can claim to be moderated by a certain moderator directly. Alternatively, a resource can claim to be hosted by a certain host which claims to be moderated by a certain moderator. Either way, all relevant claims SHOULD be verified before using them in your application.</p>
+		</section>
+		<section id="host-ontology">
+			<h3>Host ontology</h3>
+			<dl class="term" id="term-hostedBy" resource="https://w3id.org/fep/xxxx/hostedBy">
+				<dt>URI</dt>
+				<dd>https://w3id.org/fep/xxxx/hostedBy</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is hosted by</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">Service-level concerns regarding the subject should be directed at the object.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/hostOf" href="#term-hostOf">hostOf</a></dd>
+			</dl>
+			<dl class="term" id="term-hostOf" resource="https://w3id.org/fep/xxxx/hostOf">
+				<dt>URI</dt>
+				<dd>`https://w3id.org/fep/xxxx/hostOf`</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is the host of</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">The subject handles service-level concerns for the object.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/hostedBy" href="#term-hostedBy">hostedBy</a></dd>
+			</dl>
+			<dl class="term" id="term-host" resource="https://w3id.org/fep/xxxx/host">
+				<dt>URI</dt>
+				<dd>https://w3id.org/fep/xxxx/host</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is verifiably hosted by</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">A bidirectional link has been established between the subject and the object. This property SHOULD only be inferred from a claim that the subject is hosted by the object. This property SHOULD NOT be claimed directly.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/hostedBy" href="#term-hostedBy">hostedBy</a></dd>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/hostOf" href="#term-hostOf">hostOf</a></dd>
+			</dl>
+		</section>
+		<section id="moderation-ontology">
+			<h3>Moderator ontology</h3>
+			<dl class="term" id="term-moderatedBy" resource="https://w3id.org/fep/xxxx/moderatedBy">
+				<dt>URI</dt>
+				<dd>`https://w3id.org/fep/xxxx/moderatedBy`</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is moderated by</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">Abuse considerations regarding the subject should be communicated with the object.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/moderatorOf" href="#term-moderatorOf">moderatorOf</a></dd>
+			</dl>
+			<dl class="term" id="term-moderatorOf" resource="https://w3id.org/fep/xxxx/moderatorOf">
+				<dt>URI</dt>
+				<dd>`https://w3id.org/fep/xxxx/moderaterOf`</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is the moderator of</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">The subject handles abuse considerations for the object.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/moderatedBy" href="#term-moderatedBy">moderatedBy</a></dd>
+			</dl>
+			<dl class="term" id="term-moderator" resource="https://w3id.org/fep/xxxx/moderator">
+				<dt>URI</dt>
+				<dd>https://w3id.org/fep/xxxx/moderator</dd>
+				<dt>Label</dt>
+				<dd property="rdfs:label">is verifiably moderated by</dd>
+				<dt>Comment</dt>
+				<dd property="rdfs:comment">A bidirectional link has been established between the subject and the object. This property SHOULD only be inferred from a claim that the subject is moderated by the object. This property SHOULD NOT be claimed directly.</dd>
+				<dt>See also</dt>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/moderatedBy" href="#term-moderatedBy">moderatedBy</a></dd>
+				<dd><a property="rdfs:seeAlso" resource="https://w3id.org/fep/xxxx/moderatorOf" href="#term-moderatorOf">moderatorOf</a></dd>
+			</dl>
+		</section>
+		<section id="rules">
+			<h3>Inferencing rules</h3>
+			<section id="rule-host">
+				<h4>Verifying a host relationship</h4>
+				<pre class="shacl-rules" title="SHACL Rules">
+					PREFIX : &lt;https://w3id.org/fep/xxxx/&gt;
+
+					IF {
+						?x :hostedBy ?y.
+						?y :hostOf ?x.
+					}
+					THEN {
+						?x :host ?y.
+					} 
+					
+				</pre>
+				<p>Where the following claims are made:</p>
+				<ul>
+					<li>?x <a href="#term-hostedBy">is hosted by</a> ?y.</li>
+					<li>?y <a href="#term-hostOf">is the host of</a> ?x.</li>
+				</ul>
+				<p>You can infer the following rule:</p>
+				<ul>
+					<li>?x <a href="#term-host">is verifiably hosted by</a> ?y.</li>
+				</ul>
+			</section>
+			<section id="rule-moderator">
+				<h4>Verifying a moderator relationship</h4>
+				<pre class="shacl-rules" title="SHACL Rules">
+					PREFIX : &lt;https://w3id.org/fep/xxxx/&gt;
+
+					IF {
+						?x :host ?y.
+						?y :moderator ?z.
+					}
+					THEN {
+						?x :moderator ?z.
+					} 
+					
+				</pre>
+				<p>Where the following claims are made:</p>
+				<ul>
+					<li>?x <a href="#term-moderatedBy">is moderated by</a> ?y.</li>
+					<li>?y <a href="#term-moderatorOf">is the moderator of</a> ?x.</li>
+				</ul>
+				<p>You can infer the following rule:</p>
+				<ul>
+					<li>?x <a href="#term-moderator">is verifiably moderated by</a> ?y.</li>
+				</ul>
+			</section>
+			<section id="rule-moderator">
+				<h4>Inferring a moderator via a host</h4>
+				<pre class="shacl-rules" title="SHACL Rules">
+					PREFIX : &lt;https://w3id.org/fep/xxxx/&gt;
+
+					IF {
+						?x :moderatedBy ?y.
+						?y :moderatorOf ?x.
+					}
+					THEN {
+						?x :moderator ?y.
+					} 
+					
+				</pre>
+				<p>Where the following claims are made:</p>
+				<ul>
+					<li>?x <a href="#term-moderatedBy">is verifiably hosted by</a> ?y.</li>
+					<li>?y <a href="#term-moderatorOf">is verifiably moderated by</a> ?z.</li>
+				</ul>
+				<p>You can infer the following rule:</p>
+				<ul>
+					<li>?x <a href="#term-moderator">is verifiably moderated by</a> ?z.</li>
+				</ul>
+				<p class="ednote warning">TODO: consider if this is always true or when this might possibly be false</p>
+			</section>
+		</section>
+		<section id="context">
+			<h3>JSON-LD context</h3>
+			<p class="warning">TODO: Submit the FEP that makes this work</p>
+			<p>Producers SHOULD use the following term definitions:</p>
+			<pre class="json">
+				{
+					"@context": {
+						"hostedBy": {
+							"@id": "https://w3id.org/fep/xxxx/hostedBy",
+							"@type": "@id"
+						},
+						"hostOf": {
+							"@id": "https://w3id.org/fep/xxxx/hostOf",
+							"@type": "@id"
+						},
+						"moderatedBy": {
+							"@id": "https://w3id.org/fep/xxxx/moderatedBy",
+							"@type": "@id"
+						},
+						"moderatorOf": {
+							"@id": "https://w3id.org/fep/xxxx/moderatorOf",
+							"@type": "@id"
+						}
+					}
+				}
+			</pre>
+			<p>Consumers SHOULD treat the IRI `https://w3id.org/fep/xxxx/context.jsonld` as dereferencing to these term definitions and MUST treat this remote context document as already fetched.</p>
+		</section>
+		<section id="proof">
+			<h3>Proving the associations claimed by an object</h3>
+			<p>One way to establish trust in a claim of moderation is via proof of moderation claims.</p>
+			<p>Using VC Data Integrity proof:</p>
+			<pre class="json">
+{
+  "@context": [
+    "https://w3id.org/security/data-integrity/v2",
+    "https://www.w3.org/ns/activitystreams"
+  ],
+  "id": "https://alice.example/actor",
+  "inbox": "https://inbox.example/",
+  "outbox": "https://outbox.example/",
+  "type": "Person",
+  "host": {
+    "id": "https://host.example/#the-host",
+    "type": "Service",
+    "hostOf": {"id": "https://alice.example/actor"},
+    "proof": {
+      "id": "_:proofOfHost",
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-rdfc-2022",
+      "verificationMethod": "https://key-controlled-by-the-host.example/",
+      "proofPurpose": "assertionMethod",
+      "proofValue": "[signed canonized statements that host.example/#the-host is the Service that is the hostOf alice.example/actor]"
+    }
+  }
+}
+			</pre>
+			<p class="ednote warning">TODO: Describe other verification methods</p>
+		</section>
+		<section id="objects">
+			<h3>Addressing for problematic objects</h3>
+			<div class="warning">This section is not complete and needs a lot more thought</div>
+			<p>Report the object to the first matching path:</p>
+			<ul>
+				<li>.moderator.inbox</li>
+				<li>.host.moderator.inbox</li>
+				<li>.host.inbox</li>
+				<li>.context.attributedTo.inbox</li>
+				<li>.attributedTo.inbox</li>
+			</ul>
+		</section>
+	</section>
+</body>
+</html>

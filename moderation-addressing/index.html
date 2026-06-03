@@ -340,8 +340,15 @@
 				<li>.moderator.inbox</li>
 				<li>.host.moderator.inbox</li>
 				<li>.host.inbox</li>
-				<li>.context.attributedTo.inbox</li>
+				<li>.attributedTo.moderator.inbox</li>
+				<li>.attributedTo.host.moderator.inbox</li>
+				<li>.attributedTo.host.inbox</li>
 				<li>.attributedTo.inbox</li>
+			</ul>
+			<p>TODO: where do the following fit in?</p>
+			<ul>
+				<li>.context.attributedTo.inbox -- if the object exists in some context it's reasonable that the context might be moderated and might want to be notified about abusive objects within that context</li>
+				<li>.inbox -- the LDN model kinda assumes that all notifications regarding a resource should be sent to an inbox directly declared on that resource</li>
 			</ul>
 		</section>
 	</section>

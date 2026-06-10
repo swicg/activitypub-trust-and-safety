@@ -109,11 +109,11 @@ A `LabelDefinition` MAY also carry additional behavioural-hint properties intend
 
 | Property        | Notes                                                                                                  |
 | --------------- | ------------------------------------------------------------------------------------------------------ |
-| `severity`      | Suggested severity tier for the label, e.g. `"inform"`, `"alert"`.                                     |
-| `blurs`         | What a client SHOULD blur if it chooses to act on the label, e.g. `"content"`, `"media"`, `"nothing"`. |
-| `defaultAction` | Suggested default client action, e.g. `"warn"`, `"hide"`, `"ignore"`.                                  |
-| `adultOnly`     | Boolean. `true` if the label applies only to adult-restricted content.                                 |
-| `selfLabel`     | Boolean. `true` if the label is intended primarily for first-party application.                        |
+| `severity`      | Suggested severity tier for the label, e.g., `"inform"`, `"alert"`.                                     |
+| `blurs`         | What a client SHOULD blur if it chooses to act on the label, e.g., `"content"`, `"media"`, `"nothing"`. |
+| `defaultAction` | Suggested default client action, e.g., `"warn"`, `"hide"`, `"ignore"`.                                  |
+| `adultOnly`     | Boolean. `true` if the label applies only to adult-restricted content.                                  |
+| `selfLabel`     | Boolean. `true` if the label is intended primarily for first-party application.                         |
 
 The behavioural hints above are provisional for the initial draft and may be revised before this FEP is published or converted into a W3C CG Report. Consumers of `LabelDefinitions` are not required to honour these behavioural hints: they are advisory, not normative; a client is free to map any label to any UI behaviour, or to ignore the hints entirely.
 

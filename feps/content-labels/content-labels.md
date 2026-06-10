@@ -22,7 +22,7 @@ And when expanded to reveal the content that was hidden:
 
 The text of the "content warning" can be anything; it doesn't have to be "CW example".
 
-The major drawbacks to this style of content filtering is that:
+The major drawbacks to this style of content filtering are the following:
 
 1. It requires the author of the post to add the content warning when publishing the post. This means that they need to effectively self-censor as their post is subsequentially collapsed by default in their followers' feeds.
 2. The only mechanism through which for people to filter by "content warning" is by using filters that match for "does this content warning (or post) contain this word". This may also be a regular expression in some cases. This suffers from the scunthorpe problem, and also breaks when someone uses say "k\*\*tens" instead of "kittens" in their content warning text.

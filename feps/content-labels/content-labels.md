@@ -20,7 +20,7 @@ And when expanded to reveal the content that was hidden:
 
 ![Expanded Content Warning on Mastodon](./images/mastodon-cw-expanded.png)
 
-The text of the "content warning" can be anything, it doesn't have to be "CW example".
+The text of the "content warning" can be anything; it doesn't have to be "CW example".
 
 The major drawbacks to this style of content filtering is that:
 

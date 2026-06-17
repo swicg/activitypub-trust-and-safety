@@ -17,6 +17,20 @@
 		group: "socialcg",
 		edDraftURI: "https://swicg.github.io/activitypub-trust-and-safety/moderation-addressing/",
 		latestVersion: null,
+		localBiblio: { // TODO: add to specref?
+			"XEP-0157": {
+				title: "XEP-0157: Contact Addresses for XMPP Services",
+				href: "https://xmpp.org/extensions/xep-0157.html",
+				publisher: "XMPP Standards Foundation",
+				status: "Active"
+			},
+			"XEP-0377": {
+				title: "XEP-0377: Blocking Command Reports",
+				href: "https://xmpp.org/extensions/xep-0377.html",
+				publisher: "XMPP Standards Foundation",
+				status: "Proposed"
+			}
+		}
 		};
 	</script>
 	<style>
@@ -58,7 +72,7 @@
 		</section>
 		<section id="content">
 			<h3>Content model</h3>
-			<p>HTTP resource representations are processed based on the Content-Type of the representation. Especially in cases where HTTP is only being used as a transport for a virtual / overlay network, then obtaining a representation of the resource (via HTTP GET) can yield body content that contains its own abuse contact links, similar to Link headers in HTTP.</p>
+			<p>HTTP resource representations are processed based on the Content-Type of the representation. Obtaining a representation of the resource (via HTTP GET) can yield body content that contains its own abuse contact links, similar to Link headers in HTTP.</p>
 		</section>
 	</section>
 	<section id="prior-art" class="informative">
@@ -93,6 +107,33 @@
 				</ul>
 			</section>
 		</section>
+		<section id="xmpp">
+			<h3>XMPP</h3>
+			<p>The Extensible Messaging and Presence Protocol (XMPP) is governed by the XMPP Standards Foundation (XSF), which publishes several specifications in the form of an XMPP Extension Protocol (XEP). Several XEPs deal with estbalishing "contact addresses" for various purposes.</p>
+			<p>XMPP relies on the concept of a host service more explicitly than in ActivityPub. Most prominently, [[[XEP-0157]]] is an actively-used XEP that allows services to advertise contact addresses via Service Discovery, with the following possible fields:</p>
+			<dl>
+				<dt>`abuse-addresses`</dt>
+				<dd>One or more addresses for communication related to abusive traffic</dd>
+				<dt>`admin-addresses`</dt>
+				<dd>One or more addresses for communication with the service administrators</dd>
+				<dt>`feedback-addresses`</dt>
+				<dd>One or more addresses for customer feedback</dd>
+				<dt>`sales-addresses`</dt>
+				<dd>One or more addresses for communication related to sales and marketing</dd>
+				<dt>`security-addresses`</dt>
+				<dd>One or more addresses for communication related to security concerns</dd>
+				<dt>`status-addresses`</dt>
+				<dd>One or more addresses for service status</dd>
+				<dt>`support-addresses`</dt>
+				<dd>One or more addresses for customer support</dd>
+			</dl>
+			<p>Other XEPs have proposed protocols more focused on a specific use case. For example, [[[XEP-0377]]] extends the "block" command from another XEP, and allows optionally including a "report" associated with the blocked entity, which allows reporters to include any offending "stanza-id" as well as supplementary "text" that provides a reason for the report. Services supporting this extended blocking flow can advertise a "feature" of `urn:xmpp:reporting:1` via the common Service Discovery flow.</p>
+			</section>
+		</section>
+		<section id="ldn">
+			<h3>Linked Data Notifications</h3>
+			<p>[[[LDN]]] describes a default model where all notifications about a resource are sent directly to the "inbox" of that resource. No special considerations are given toward who controls that inbox or who can read notifications posted to that inbox; it is unspecified whether any reports sent to that inbox will be seen or handled by the HTTP Host or by some other entity.</p>
+		</section>
 	</section>
 	<section id="design" class="informative">
 		<h2>Design considerations</h2>
@@ -120,7 +161,7 @@
 		<h2>Recommendations</h2>
 		<p>Social agents wishing to report problematic content on hosted services using ActivityPub SHOULD use the flow defined in this section.</p>
 		<p class="warning">This flow is currently a work-in-progress.</p>
-		<section id="concepts">
+		<!-- <section id="concepts">
 			<h3>Concepts</h3>
 			<p>A resource may have <dfn>service-level concerns</dfn> such as making a resource available on behalf of some other entity, and providing representations of it as content.</p>
 			<p>A resource may have <dfn>abuse considerations</dfn> when that resource or its content is used in a way that creates harm for people, either as individuals or as groups.</p>
@@ -331,7 +372,7 @@
 }
 			</pre>
 			<p class="ednote warning">TODO: Describe other verification methods</p>
-		</section>
+		</section> -->
 		<section id="objects">
 			<h3>Addressing for problematic objects</h3>
 			<div class="warning">This section is not complete and needs a lot more thought</div>

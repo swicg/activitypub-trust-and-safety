@@ -7,6 +7,10 @@ assignees: ''
 
 ---
 
+## Attendees
+Please specific your name or pseudonym, affiliation if any, and pronouns, as this will help us take accurate meeting notes.
+
+- (to be filled out during the meeting)
 
 ## Administrivia:
 

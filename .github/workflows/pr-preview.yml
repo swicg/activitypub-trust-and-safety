@@ -7,7 +7,7 @@
 # built around one rule: nothing from the pull request is ever executed.
 #
 #   * the trusted checkout (base branch) supplies wrangler.jsonc and
-#     script/build-site.sh
+#     scripts/build-site.sh
 #   * the untrusted checkout (PR head) lives in ./pr, and the trusted script
 #     copies its spec/ directory out as data
 #   * wrangler.jsonc declares no "main", so the uploaded assets cannot run code
@@ -22,7 +22,7 @@ on:
     paths:
       # Anything published: documents, images, stylesheets.
       - "spec/**"
-      - "script/build-site.sh"
+      - "scripts/build-site.sh"
       - "wrangler.jsonc"
       - ".github/workflows/pr-preview.yml"
 
@@ -54,12 +54,21 @@ jobs:
         with:
           persist-credentials: false
 
+      # checkout v7 refuses fork checkouts under pull_request_target unless
+      # explicitly opted in, because the usual next step is building or running
+      # the fork's code with the base repository's secrets — a "pwn request".
+      # That is not what happens here: this checkout is data only. Nothing in
+      # ./pr is executed, no dependencies are installed from it, and the only
+      # thing that reads it is scripts/build-site.sh from the base checkout,
+      # which copies files and refuses symlinks. Keep it that way, or drop this
+      # flag and move to the workflow_run pattern instead.
       - name: Check out pull request head (untrusted)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: pr
           persist-credentials: false
+          allow-unsafe-pr-checkout: true
 
       - name: Determine preview URL
         id: preview
@@ -72,9 +81,13 @@ jobs:
       # Runs the build script from the BASE checkout against the pull request's
       # spec/ directory. The script is trusted because it came from main; only
       # the content it copies is untrusted. A fork editing its own copy of
-      # script/build-site.sh has no effect here.
+      # scripts/build-site.sh has no effect here.
       - name: Build site from pull request
-        run: ./scripts/build-site.sh pr _site
+        id: build
+        run: |
+          # pipefail so the step fails on the script's exit code, not tee's.
+          set -o pipefail
+          ./scripts/build-site.sh pr _site 2>&1 | tee build.log
 
       - name: Upload preview version
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
@@ -95,6 +108,45 @@ jobs:
             View the [preview for #${{ github.event.number }}](${{ steps.preview.outputs.url }}/).
 
             Built from ${{ github.event.pull_request.head.sha }} · updated on every push.
+
+      # The build output quotes filenames taken from the pull request, so it is
+      # attacker-influenced text on its way into a comment. Strip backticks so
+      # it cannot escape the fenced block, drop any line that would close the
+      # GITHUB_OUTPUT heredoc, and cap the size.
+      - name: Collect failure output
+        id: failure
+        if: failure()
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+        run: |
+          set -euo pipefail
+          {
+            echo "log<<PREVIEW_FAIL_EOF"
+            if [ "$BUILD_OUTCOME" = "failure" ] && [ -f build.log ]; then
+              tr -d '`\r' < build.log \
+                | grep -v '^PREVIEW_FAIL_EOF$' \
+                | head -n 30 \
+                | head -c 2000
+            else
+              echo "The site built, but publishing the preview failed."
+            fi
+            echo
+            echo "PREVIEW_FAIL_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Comment build failure
+        if: failure()
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: preview
+          message: |
+            ## 📄 Preview
+
+            ❌ Preview failed for ${{ github.event.pull_request.head.sha }}: [view run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+
+            ```text
+            ${{ steps.failure.outputs.log }}
+            ```
 
       - name: Write job summary
         env:

@@ -7,12 +7,12 @@
 # in the repository is published — meeting minutes, documents/ and feps/ stay
 # on GitHub only.
 #
-# Usage: script/build-site.sh [SOURCE_DIR] [OUTPUT_DIR]
+# Usage: scripts/build-site.sh [SOURCE_DIR] [OUTPUT_DIR]
 #   SOURCE_DIR  directory to read spec/ from  (default: the current directory)
 #   OUTPUT_DIR  directory to write the site into (default: _site)
 #
 # Run it locally to see what will be published:
-#   script/build-site.sh && open _site/index.html
+#   scripts/build-site.sh && open _site/index.html
 #
 # SECURITY: the pull request preview workflow runs *this* script, from the base
 # branch, against a pull request's checkout. SOURCE_DIR is therefore untrusted:
@@ -26,6 +26,19 @@ SPEC_DIR="${SOURCE_DIR%/}/spec"
 
 if [ ! -d "$SPEC_DIR" ]; then
   echo "error: no spec/ directory found in '${SOURCE_DIR}'" >&2
+  exit 1
+fi
+
+# Symlinks are refused outright. The preview build runs this script against an
+# untrusted pull request checkout, and `cp -R` copies a symlink as a symlink —
+# so a link pointing outside spec/ (say, at the runner's workflow event file or
+# temp directory) would be followed by whatever reads the output, publishing
+# files from the runner. There is no legitimate reason for a spec to contain
+# one.
+links=$(find "$SPEC_DIR" -type l 2>/dev/null || true)
+if [ -n "$links" ]; then
+  echo "error: refusing to publish symlinks:" >&2
+  echo "$links" >&2
   exit 1
 fi
 

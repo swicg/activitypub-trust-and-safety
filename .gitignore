@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# PR preview staging (created by .github/workflows/pr-preview.yml)
+_site/

@@ -1,0 +1,18 @@
+{
+  // Configuration for the Worker that serves this report.
+  //
+  // Production is deployed by hand; this file exists so that CI can upload
+  // *preview* versions for pull requests (see .github/workflows/pr-preview.yml).
+  //
+  // Deliberately has no "main" entry: this is an assets-only Worker, so nothing
+  // in the deployed directory is ever executed. That is what makes it safe to
+  // preview HTML from forked pull requests.
+  "name": "activitypub-trust-and-safety-taskforce",
+  "compatibility_date": "2026-08-04",
+  "preview_urls": true,
+  "assets": {
+    // Populated by CI with the .html files from the branch under review.
+    // Nothing else is copied in.
+    "directory": "./_site"
+  }
+}

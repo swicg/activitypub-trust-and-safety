@@ -1,0 +1,138 @@
+# Publishes a preview of the report for each pull request that touches an HTML
+# document, as a Cloudflare Worker *version* (never a production deployment).
+#
+# Uses pull_request_target so that previews also work for pull requests opened
+# from forks, which do not have access to secrets under `pull_request`. That
+# trigger runs with write access to the base repository, so the workflow is
+# built around one rule: nothing from the pull request is ever executed.
+#
+#   * the trusted checkout (base branch) supplies wrangler.jsonc
+#   * the untrusted checkout (PR head) lives in ./pr and only *.html files are
+#     copied out of it
+#   * wrangler.jsonc declares no "main", so the uploaded assets cannot run code
+#
+# Do not add a build step, a dependency install, or anything else that runs code
+# from ./pr without changing the trigger to `pull_request` first.
+name: PR Preview
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**/*.html"
+      - "wrangler.jsonc"
+      - ".github/workflows/pr-preview.yml"
+
+permissions: {}
+
+concurrency:
+  group: pr-preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Deploy preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out base branch (trusted)
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Check out pull request head (untrusted)
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr
+          persist-credentials: false
+
+      - name: Determine preview URL
+        id: preview
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+        run: |
+          echo "alias=pr-${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+          echo "url=https://pr-${PR_NUMBER}-activitypub-trust-and-safety-taskforce.socialcg.workers.dev" >> "$GITHUB_OUTPUT"
+
+      - name: Stage HTML documents
+        id: stage
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          # The security boundary: only *.html crosses from ./pr into ./_site.
+          staged=0
+          while IFS= read -r -d '' file; do
+            rel="${file#pr/}"
+            case "$rel" in
+              *[!A-Za-z0-9._/-]* | *..*)
+                echo "::error::Refusing to stage HTML file with an unexpected path: ${rel}"
+                exit 1
+                ;;
+            esac
+            # -D creates the destination's parent directories; the explicit
+            # destination means the validated $rel decides the layout, not the
+            # untrusted source path. -m 644 because install defaults to 755.
+            install -D -m 644 "$file" "_site/${rel}"
+            staged=$((staged + 1))
+          done < <(find pr -path pr/.git -prune -o -name '*.html' -type f -print0)
+
+          if [ "$staged" -eq 0 ]; then
+            echo "::error::No HTML documents found in the pull request head."
+            exit 1
+          fi
+          echo "Staged ${staged} HTML document(s)."
+
+          # Build the table of links used by the pull request comment. Paths are
+          # already validated above, so they are safe to interpolate.
+          {
+            echo "docs<<PREVIEW_DOCS_EOF"
+            while IFS= read -r rel; do
+              case "$rel" in
+                index.html) path="/" ;;
+                */index.html) path="/${rel%index.html}" ;;
+                *) path="/${rel}" ;;
+              esac
+              printf "| \`%s\` | %s%s |\n" "$rel" "$PREVIEW_URL" "$path"
+            done < <(find _site -name '*.html' -type f -printf '%P\n' | sort)
+            echo "PREVIEW_DOCS_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload preview version
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # `versions upload` publishes to the preview alias only. It never
+          # changes which version serves production traffic.
+          command: versions upload --preview-alias ${{ steps.preview.outputs.alias }} --message "Preview for PR #${{ github.event.number }}"
+
+      - name: Comment preview links
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: cloudflare-preview
+          message: |
+            ## 📄 Preview
+
+            | Document | Link |
+            | --- | --- |
+            ${{ steps.stage.outputs.docs }}
+
+            Built from ${{ github.event.pull_request.head.sha }} · updated on every push.
+
+      - name: Write job summary
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+        run: |
+          {
+            echo "### Preview"
+            echo
+            echo "${PREVIEW_URL}"
+          } >> "$GITHUB_STEP_SUMMARY"

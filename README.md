@@ -17,7 +17,7 @@ It is used:
 This taskforce is led by:
 
 - Emelia Smith ([@thisismissem](https://github.com/thisismissem) / [@thisismissem@hachyderm.io](https://hachyderm.io/@thisismissem))
-- Darius Kazemi ([@dariusk](https://github.com/dariusk) / [@darius@friend.camp](https://friend.camp/@darius))
+- [You?](https://github.com/swicg/activitypub-trust-and-safety/issues/135)
 
 Emelia and Darius are responsible for coordinating and running the taskforce meetings, their primary role is to facilitate consensus-building among taskforce members.
 
@@ -25,7 +25,7 @@ Emelia and Darius are responsible for coordinating and running the taskforce mee
 
 The initial scope of work for this task force is split into three workstreams, as follows:
 
-- Initial Report ([#32](https://github.com/swicg/activitypub-trust-and-safety/issues/32))
+- Initial Report ([#32](https://github.com/swicg/activitypub-trust-and-safety/issues/32)) (reworked)
   - Overview of current state of trust and safety on the Fediverse
   - Documenting how ActivityPub functionality is currently used
   - Best Practices & Recommendations
@@ -35,13 +35,13 @@ The initial scope of work for this task force is split into three workstreams, a
   - Inter-server communication on moderation activities
 - Content warnings, labels, and annotations ([#41](https://github.com/swicg/activitypub-trust-and-safety/issues/41))
 
-This taskforce is intended to be ongoing, as the work of trust and safety is an ongoing matter. Additional work items may come in from the SocialCG or the taskforce, and be added to future workstreams.
+This taskforce is intended to be ongoing, as the work of trust and safety is an ongoing matter. Additional work items may come in from the Social Web CG or the taskforce, and be added to future workstreams & milestones.
 
 ## Other Discussion Forums
 
 In addition to this repository, conversation also occurs at:
 
-* W3C `public-swicg` [SocialWeb CG mailing list](https://lists.w3.org/Archives/Public/public-swicg/) (for general discussion)
+* W3C `public-swicg` [Social Web CG mailing list](https://lists.w3.org/Archives/Public/public-swicg/) (for general discussion)
 * [Fediverse Enhancement Protocols](https://codeberg.org/fediverse/fep) repository (for related specification under
   incubation)
 

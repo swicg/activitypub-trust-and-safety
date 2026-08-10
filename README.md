@@ -3,9 +3,7 @@
 Repository for a report on improving the trust, safety, and integrity of ActivityPub and related specifications by the W3C 
 [Social Web Community Group](https://www.w3.org/community/swicg/).
 
-Latest editor's drafts:
-- [Initial Report](https://swicg.github.io/activitypub-trust-and-safety/initial-report/)
-- [Overview](https://swicg.github.io/activitypub-trust-and-safety/) (not started)
+Latest editor's draft: [Overview](https://swicg.github.io/activitypub-trust-and-safety/)
 
 It is used:
 

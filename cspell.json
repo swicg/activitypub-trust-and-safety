@@ -1,0 +1,7 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "files": ["spec/**"],
+  "ignorePaths": ["**", "!spec/**"],
+  "words": []
+}

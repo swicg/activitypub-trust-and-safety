@@ -1,7 +1,20 @@
 {
   "version": "0.2",
-  "language": "en",
+  "language": "en,en-GB",
   "files": ["spec/**"],
-  "ignorePaths": ["**", "!spec/**"],
-  "words": []
+  "words": [
+    "activitypub",
+    "activitystreams",
+    "biblio",
+    "emelia",
+    "fediverse",
+    "odrl",
+    "respec",
+    "scalingtrust",
+    "socialcg",
+    "sotd",
+    "swicg",
+    "workstream",
+    "workstreams"
+  ]
 }

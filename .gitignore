@@ -131,3 +131,9 @@ dist
 
 # PR preview staging (created by .github/workflows/pr-preview.yml)
 _site/
+
+# Obsidian Editor files
+.obsidian
+
+# Mac OS files
+.DS_Store

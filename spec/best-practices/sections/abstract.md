@@ -1,0 +1,1 @@
+Trust and safety on social platforms are the outcomes of the interactions between different features, (default) settings, as well as user behaviors. This document collects existing "best practices" from AP implementers as well as server operators. This document describes different trade-offs and effects of particular features that have been encountered and tried in practice.
